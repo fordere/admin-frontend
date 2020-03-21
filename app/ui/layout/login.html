@@ -1,82 +1,52 @@
-﻿<div class="login-panel" id="login-container">
-    <section class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="page-content">
-                    <h2>Login</h2>
-                    <div class="form-style form-style-3">
-                        <form name="loginForm">
-                            <div class="form-inputs clearfix">
-                                <p class="login-text">
-                                    <input type="text" id="login-username" placeholder="E-Mail" ng-model="loginUser.username" required />
-                                    <i class="icon-user"></i>
-                                </p>
-                                <p class="login-password">
-                                    <input type="password" placeholder="Passwort" ng-model="loginUser.password" required />
-                                    <i class="icon-lock"></i>
-                                    <a href="/passwordLost" loginslidercloser>Passwort vergessen?</a>
-                                </p>
-                            </div>
-                            <p class="form-submit login-submit">
-                                <input type="submit" ng-click="login()" ng-disabled="loginForm.$invalid" value="Login" class="button color small login-submit submit">
-                            </p>
-                            <div class="rememberme">
-                                <label>
-                                    <input type="checkbox" ng-model="loginUser.rememberMe" checked="true">Remember Me
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- End page-content -->
-            </div>
-            <!-- End col-md-6 -->
-            <div class="col-md-6">
-                <div class="page-content Register">
-                    <h2>Noch keinen Account? Registriere dich jetzt!</h2>
-                    <p>Bleibe auf dem Laufenden! Wir informieren alle Mitglieder sobald die neue Saison beginnt oder ein wichtiger Event bevorsteht. </p>
-                    <p>Die Anmeldung ist absolut kostenlos. Du registrierst dich dabei nicht für eine Saison.</p>
-                    <a href="/register" loginslidercloser class="button color small signup">Erstelle einen Account</a>
-                </div>
-                <!-- End page-content -->
-            </div>
-            <!-- End col-md-6 -->
-        </div>
-    </section>
-</div>
+﻿<!--<div class="login-panel" id="login-container">-->
+<!--    <section class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-6">-->
+<!--                <div class="page-content">-->
+<!--                    <h2>Login</h2>-->
+<!--                    <div class="form-style form-style-3">-->
+<!--                        <form name="loginForm">-->
+<!--                            <div class="form-inputs clearfix">-->
+<!--                                <p class="login-text">-->
+<!--                                    <input type="text" id="login-username" placeholder="E-Mail" ng-model="loginUser.username" required />-->
+<!--                                    <i class="icon-user"></i>-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                            <p class="form-submit login-submit">-->
+<!--                                <input type="submit" ng-click="login()" ng-disabled="loginForm.$invalid" value="Login" class="button color small login-submit submit">-->
+<!--                            </p>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; End page-content &ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--</div>-->
 
-<div id="header-top" ng-controller="fordere.loginCtrl as ctrl" ng-class="{'fordere-sg': ctrl.isDivision(2), 'fordere-lu': ctrl.isDivision(3), 'fordere-winti': ctrl.isDivision(4)}">
+<!--<div id="header-top" ng-controller="fordere.loginCtrl as ctrl" ng-class="{'fordere-sg': ctrl.isDivision(2), 'fordere-lu': ctrl.isDivision(3), 'fordere-winti': ctrl.isDivision(4)}">-->
 
-    <section class="container clearfix">
-        <nav class="header-top-nav">
-            <div class="row">
-                <ul class="header-top-nav-list list-unstyled col-xs-12 col-sm-6">
-                    <li ng-show="showLoginLink">
-                        <a href="" id="login-panel" ng-show="showLoginLink"><i class="fa fa-sign-in"></i>Anmelden</a>
-                    </li>
-                    <li ng-show="showLoginLink">
-                        <a href="/register" loginslidercloser ng-show="showLoginLink"><i class="fa fa-edit"></i>Registrieren</a>
-                    </li>
-                    <li ng-hide="showLoginLink">
-                        <a href="#" ng-click="logout()" ng-hide="showLoginLink"><i class="fa fa-sign-out"></i>Abmelden</a>
-                    </li>
-                    <li ng-hide="showLoginLink">
-                        <a href="/profile"><i class="fa fa-user"></i>Profil</a>
-                    </li>
-                    <li>
-                        <a href="/contact" loginslidercloser><i class="fa fa-envelope-o"></i>Kontakt</a>
-                    </li>
-                </ul>
+<!--    <section class="container clearfix">-->
+<!--        <nav class="header-top-nav">-->
+<!--            <div class="row">-->
+<!--                <ul class="header-top-nav-list list-unstyled col-xs-12 col-sm-6">-->
+<!--                    <li ng-show="showLoginLink">-->
+<!--                        <a href="" id="login-panel" ng-show="showLoginLink"><i class="fa fa-sign-in"></i>Anmelden</a>-->
+<!--                    </li>-->
+<!--                    <li ng-hide="showLoginLink">-->
+<!--                        <a href="#" ng-click="logout()" ng-hide="showLoginLink"><i class="fa fa-sign-out"></i>Abmelden</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
 
-                <hr class="visible-xs fordere-header-divider" ng-if="ctrl.getDivisions().length > 1" />
+<!--                <hr class="visible-xs fordere-header-divider" ng-if="ctrl.getDivisions().length > 1" />-->
 
-                <div class="col-xs-12 col-sm-6">
-                    <ul class="header-top-nav-list list-unstyled  fordere-header-division-list" ng-if="ctrl.getDivisions().length > 1">
-                        <li ng-repeat="division in ctrl.getDivisions()" ng-class="{'fordere-selected-division' : ctrl.isSelectedDivision(division)}"><a href="" ng-click="ctrl.select(division)">{{division.Name}}</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </section>
+<!--                <div class="col-xs-12 col-sm-6">-->
+<!--                    <ul class="header-top-nav-list list-unstyled  fordere-header-division-list" ng-if="ctrl.getDivisions().length > 1">-->
+<!--                        <li ng-repeat="division in ctrl.getDivisions()" ng-class="{'fordere-selected-division' : ctrl.isSelectedDivision(division)}"><a href="" ng-click="ctrl.select(division)">{{division.Name}}</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </nav>-->
+<!--    </section>-->
 
-</div>
+<!--</div>-->

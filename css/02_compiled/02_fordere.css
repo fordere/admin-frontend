@@ -489,3 +489,16 @@ header.fordere-winti {
   /* bug fix - no overlay */
   display: none;
 }
+.admin-dashboard-item {
+  border: 1px solid grey;
+  padding: 20px;
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+.admin-dashboard-item:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
