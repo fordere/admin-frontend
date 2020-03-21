@@ -1,0 +1,189 @@
+﻿<div class="row" ng-controller="fordere.admin.finaldayEditCtrl as ctrl">
+
+    <div class="col-lg-12">
+
+        <div class="page-content">
+            <div class="boxedtitle page-title">
+                <h2>{{ctrl.name}}</h2>
+            </div>
+            <h4>Turniere</h4>
+            <button type="button" class="btn btn-primary" ng-click="ctrl.addCompetition()"><i class="fa fa-plus" aria-hidden="true"></i> Erstellen</button>
+            <br />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">
+                            Name
+                        </th>
+                        <th class="col-md-3">
+                            Tischtyp
+                        </th>
+                        <th class="col-md-2">
+                            Modus
+                        </th>
+                        <th class="col-md-2">
+                            Status
+                        </th>
+                        <th class="col-md-2">
+                            Optionen
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="competition in ctrl.finaldayCompetitions">
+                        <td>
+                            <input ng-model="competition.Name" type="text" ng-change="ctrl.updateCompetitionName(competition)">
+                        </td>
+                        <td>
+                            {{competition.TableType}}
+                        </td>
+                        <td>
+                            {{competition.CompetitionMode}}
+                        </td>
+                        <td>
+                            {{ctrl.competitionStates[competition.State]}}
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-xs" href="/admin/finalday/{{ctrl.finalDayId}}/competition/{{competition.Id}}">Bearbeiten</a>
+                            <a class="btn btn-default btn-xs" ng-click="ctrl.showDeleteTournamentWarning(competition.Id)"><i class="fa fa-times" title="Turnier löschen" data-toggle="tooltip" data-placement="top"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>Tische</h4>
+            <button type="button" class="btn btn-primary" ng-click="ctrl.addTable()"><i class="fa fa-plus" aria-hidden="true"></i> Hinzufügen</button>
+            <br />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-md-4">
+                            Tischnummer
+                        </th>
+                        <th class="col-md-4">
+                            Tischtyp
+                        </th>
+                        <th class="col-md-2">
+                            Status
+                        </th>
+                        <th class="col-md-2">
+                            Optionen
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="table in ctrl.finaldayTables">
+                        <td>
+                            <input class="form-control" ng-model="table.Number" type="number" ng-change="ctrl.updateTableNumber(table)" min="1" />
+                        </td>
+                        <td>
+                            {{table.TableType}}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" ng-click="ctrl.updateTableDisabled(table, False)" ng-class="{ 'active' : !table.Disabled }">Aktiv</button>
+                                <button type="button" class="btn btn-default" ng-click="ctrl.updateTableDisabled(table, True)" ng-class="{ 'active' : table.Disabled }">Pausiert</button>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" ng-click="ctrl.removeTable(table)">Entfernen</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="createFinalDayCompetitionDialog" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Schliessen</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Turnier erstellen</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <label>Name</label>
+                            <input class="form-control" type="text" ng-model="ctrl.newCompetition.Name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <label class="control-label" for="tableType">Tischtyp</label>
+                            <select class="form-control" name="tableType" ng-model="ctrl.newCompetition.TableType" ng-options="tableType.key as tableType.name for tableType in ctrl.tableTypes"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <label class="control-label" for="competitionMode">Turniermodus</label>
+                            <select class="form-control" name="competitionMode" ng-model="ctrl.newCompetition.CompetitionMode" ng-options="competitionMode.key as competitionMode.name for competitionMode in ctrl.competitionModes"></select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <label class="control-label" for="competitionMode">Priorität</label>
+                            <input class="form-control" type="number" ng-model="ctrl.newCompetition.Priority" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.cancelCreateFinalDayCompetition()">Schliessen</button>
+                    <button type="button" class="btn btn-primary" ng-click="ctrl.createFinalDayCompetition()">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteCompetitionWarning" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Schliessen</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Turnier löschen</h4>
+                </div>
+                <div class="modal-body">
+                    Sämtliche Teams sowie deren Spiele und Resultate werden ebenfalls gelöscht. Bist du sicher, dass du dies machen möchtest?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-danger" ng-click="ctrl.deleteTournament()">Turnier löschen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createFinalDayTableDialog" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Schliessen</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Tisch hinzufügen</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <label>Nummer</label>
+                            <input class="form-control" type="number" ng-model="ctrl.newTable.Number" min="1" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <label class="control-label" for="tableType">Tischtyp</label>
+                            <select class="form-control" name="tableType" ng-model="ctrl.newTable.TableType" ng-options="tableType.key as tableType.name for tableType in ctrl.tableTypes"></select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.cancelCreateFinalDayTable()">Schliessen</button>
+                    <button type="button" class="btn btn-primary" ng-click="ctrl.createFinalDayTable()">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

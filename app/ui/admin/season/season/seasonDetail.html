@@ -1,0 +1,45 @@
+﻿<div class="row" ng-controller="fordere.admin.seasonDetailCtrl as ctrl">
+
+    <div class="page-content page-shortcode col-md-12">
+        <div class="boxedtitle page-title">
+            <h2>Season bearbeiten</h2>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label>Name</label>
+            <input class="form-control" type="text" ng-model="ctrl.season.Name" />
+        </div>
+        <div class="col-sm-6 form-group">
+            <label class="control-label" for="state">Status</label>
+            <select class="form-control" name="state" ng-model="ctrl.season.State" ng-options="state.Key as state.Name for state in ctrl.seasonStates"></select>
+        </div>
+
+        <div class="col-sm-12 form-group">
+            <label>Termine</label>
+            <p class="alert alert-info">Diese Info wird unter "Meine Saison > Termine" sowie direkt unter "Meine Saison" angezeigt. </p>
+            <div text-angular ng-model="ctrl.season.Dates"></div>
+        </div>
+
+        <div class="col-sm-12 form-group" ng-if="ctrl.season.State === 'PrepareFinalDay'">
+            <label>Text Startseite (Infos Vorbereitung Finaltag)</label>
+            <div text-angular ng-model="ctrl.season.InfosFinalDay"></div>
+        </div>
+
+        <div class="col-sm-12 form-group" ng-if="ctrl.season.State === 'PrepareSeason'">
+            <label>Text Startseite (Infos Saison Vorbereitung > Anmeldephase vorbei)</label>
+            <div text-angular ng-model="ctrl.season.InfosPrepareSeason"></div>
+        </div>
+
+        <div class="col-sm-12 form-group" ng-if="ctrl.season.State === 'EinteilungReady'">
+            <label>Text Startseite (Infos Einteilung)</label>
+            <div text-angular ng-model="ctrl.season.InfosEinteilung"></div>
+        </div>
+
+        <hr />
+
+        <div class="pull-right">
+            <button type="cancel" ng-click="ctrl.gotoList()" class="btn btn-danger"><span class="fa fa-undo"></span> Zurück</button>
+            <button type="submit" ng-click="ctrl.save()" class="btn btn-primary"><span class="fa fa-floppy-o"></span> Speichern</button>
+        </div>
+    </div>
+</div>

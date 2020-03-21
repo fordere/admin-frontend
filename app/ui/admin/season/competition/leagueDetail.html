@@ -1,0 +1,37 @@
+﻿<div ng-controller="fordere.admin.leagueDetailCtrl as ctrl">
+
+    <div class="col-lg-12">
+        <div class="page-content page-shortcode">
+            <div class="boxedtitle page-title">
+                <h2>{{ctrl.league.Number}}. Liga Gruppe {{ctrl.league.Group}}</h2>
+            </div>
+
+            <div class="form-group">
+                <label>Nummer</label>
+                <input class="form-control" placeholder="Nummer" ng-model="ctrl.league.Number">
+            </div>
+
+            <div class="form-group">
+                <label>Gruppe</label>
+                <input class="form-control" placeholder="Gruppe" ng-model="ctrl.league.Group">
+            </div>
+
+            <div class="form-group">
+                <label>Mode</label>
+                <select class="form-control" ng-model="ctrl.league.LeagueMatchCreationMode">
+                    <option value="Single">Hinrunde</option>
+                    <option value="Double">Hin- & Rückrunde</option>
+                </select>
+            </div>
+
+
+            <hr />
+
+            <div class="pull-right">
+                <button type="cancel" ng-click="ctrl.gotoList()" class="btn btn-danger"><span class="fa fa-undo"></span> Zurück</button>
+                <button type="submit" ng-click="ctrl.save()" class="btn btn-primary"><span class="fa fa-floppy-o"></span> Speichern</button>
+            </div>
+        </div>
+    </div>
+
+</div>

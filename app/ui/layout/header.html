@@ -1,0 +1,119 @@
+
+<section class="container clearfix" ng-controller="fordere.menuCtrl as ctrl">
+    <div class="logo">
+        <a href="/" ng-click="ctrl.reload()" ng-hide="ctrl.isAdmin() || ctrl.isDivision(3)">
+            <img alt="" loginslidercloser src="assets/images/logo.png">
+        </a>
+
+        <a href="/" ng-click="ctrl.reload()" ng-hide="ctrl.isAdmin() || !ctrl.isDivision(3)">
+            <img alt="" loginslidercloser src="assets/images/logo_lu.png">
+        </a>
+
+        <ul ng-show="ctrl.isAdmin()">
+            <li>
+                <a href="/" ng-click="ctrl.reload()">Fordere - Home</a>
+            </li>
+        </ul>
+    </div>
+
+    <label for="mobileMenu" class="mobileMenuLabel">Navigation</label>
+    <input type="checkbox" ng-model="isMenuOpen" id="mobileMenu" style="display: none;" class="mobileMenuLabel" role="button">
+    <ul id="menu" menu>
+        <!-- Season -->
+        <li>
+            <a active-link="current_page_item" ng-if="ctrl.season.Name" ng-show="ctrl.isFinalDay() || ctrl.shouldShowMySeason() || ctrl.shouldShowStandings()">{{ctrl.season.Name}}</a>
+            <ul class="submenu">
+                <li ng-show="ctrl.shouldShowMySeason()">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/my-season" title="Meine Saison"><i class="fa fa-angle-right"></i> Meine Saison</a>
+                </li>
+                <li ng-show="ctrl.shouldShowRegister()">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/season/register" title="Anmeldung"><i class="fa fa-angle-right"></i> Anmeldung</a>
+                </li>
+                <li ng-show="ctrl.shouldShowStandings()" ng-repeat="competition in ctrl.competitions">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/leagues/{{competition.Id}}/standings" title="{{competition.Name}} Tabelle"><i class="fa fa-angle-right"></i> {{competition.Name}}</a>
+                </li>
+                <li ng-show="ctrl.shouldShowStandings() && ctrl.isDivision(1)">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/barmasters" title="Bar Masters"><i class="fa fa-angle-right"></i> Bar Masters</a>
+                </li>
+                <li ng-show="ctrl.isFinalDay()">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/finaltag" title="Finaltag"><i class="fa fa-angle-right"></i> Finaltag</a>
+                </li>
+                <li ng-show="ctrl.shouldShowStandings()">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/season/termine" title="Saison Termine"><i class="fa fa-angle-right"></i> Termine</a>
+                </li>
+                <li ng-show="ctrl.shouldShowStandings()">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/season/{{ctrl.season.Id}}/statistics" title="Statistiken"><i class="fa fa-angle-right"></i> Statistiken</a>
+                </li>
+            </ul>
+        </li>
+
+        <li ng-if="ctrl.shouldShowRegisterNow() && (ctrl.isDivision(1) || ctrl.isDivision(3) || ctrl.isDivision(4))" >
+            <a href="/season/register">Jetzt anmelden!</a>
+        </li>
+
+        <li ng-if="ctrl.shouldShowRegisterNow() && ctrl.isDivision(2)">
+            <a href="/season/register/27">Jetzt anmelden!</a>
+        </li>
+
+        <!-- Spielregeln und Modus -->
+        <li ng-show="ctrl.shouldShowStandings() || ctrl.isFinalDay()">
+            <a href="/rules/barfoosleague" active-link="current_page_item">Regeln & Modus</a>
+            <ul class="submenu">
+                <li ng-show="ctrl.shouldShowStandings()" ng-repeat="competition in ctrl.competitions">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/rules/{{competition.Id}}" title="Regeln {{competition.Name}}"><i class="fa fa-angle-right"></i> {{competition.Name}}</a>
+                </li>
+                <li ng-show="ctrl.shouldShowStandings() && ctrl.isDivision(1)">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/info/barmasters" title="Regeln Bar Masters"><i class="fa fa-angle-right"></i> Bar Masters</a>
+                </li>
+                <li ng-show="ctrl.isFinalDay()">
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/finaltagmodus" title="Finaltag"><i class="fa fa-angle-right"></i> Finaltag</a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li>
+            <a href="/verein" active-link="current_page_item">Verein</a>
+            <ul class="submenu">
+                <li>
+                    <a ng-click="isMenuOpen = !isMenuOpen" href="/verein" title="Verein"><i class="fa fa-angle-right"></i> Verein</a>
+                </li>
+                <li>
+                    <a ng-click="isMenuOpen = !isMenuOpen" ng-show="ctrl.isDivision(1) || ctrl.isDivision(3) || ctrl.isDivision(4)" href="/verein/statuten" title="Statuten"><i class="fa fa-angle-right"></i> Statuten</a>
+                </li>
+                <li>
+                    <a ng-click="isMenuOpen = !isMenuOpen" ng-show="ctrl.isDivision(1)" href="/verein/stf" title="STF"><i class="fa fa-angle-right"></i> STF</a>
+                </li>
+                <li>
+                <a ng-click="isMenuOpen = !isMenuOpen" ng-show="ctrl.isDivision(1)" href="/reisli" title="Reisli"><i class="fa fa-angle-right"></i> Reisli</a>
+            </li>
+            </ul>
+        </li>
+        <li>
+            <a ng-click="isMenuOpen = !isMenuOpen" href="/bars" active-link="current_page_item">Bars</a>
+        </li>
+        <li>
+            <a ng-click="isMenuOpen = !isMenuOpen" href="/faq" active-link="current_page_item">FAQ</a>
+        </li>
+        <li>
+            <a ng-click="isMenuOpen = !isMenuOpen" href="/forum" active-link="current_page_item">Forum</a>
+        </li>
+        <li>
+            <a ng-click="isMenuOpen = !isMenuOpen" href="/archiv" active-link="current_page_item">Archiv</a>
+        </li>
+        <li ng-show="ctrl.isDivision(1)">
+            <a ng-click="isMenuOpen = !isMenuOpen" href="/kids" active-link="current_page_item">Kids</a>
+        </li>
+        <li ng-if="ctrl.isAdmin()">
+            <a href="/admin" active-link="current_page_item">Admin</a>
+            <ul class="submenu">
+                <li><a ng-click="isMenuOpen = !isMenuOpen" href="/admin/news"><i class="fa fa-bullhorn fa-fw"></i> News</a></li>
+                <li><a ng-click="isMenuOpen = !isMenuOpen" href="/admin/users"><i class="fa fa-users fa-fw"></i> Benutzer</a></li>
+                <li><a ng-click="isMenuOpen = !isMenuOpen" href="/admin/bars"><i class="fa fa-beer fa-fw"></i> Bars</a></li>
+                <li><a ng-click="isMenuOpen = !isMenuOpen" href="/admin/mailinglist"><i class="fa fa-envelope fa-fw"></i> Mailing lists</a></li>
+                <li><a ng-click="isMenuOpen = !isMenuOpen" href="/admin/sms"><i class="fa fa-comment fa-fw"></i> SMS Sender</a></li>
+                <li><a ng-click="isMenuOpen = !isMenuOpen" href="/admin/seasons"><i class="fa fa-trophy fa-fw"></i> Spielbetrieb</a></li>
+            </ul>
+        </li>
+    </ul>
+</section>

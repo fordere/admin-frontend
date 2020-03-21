@@ -1,0 +1,51 @@
+﻿<div ng-controller="fordere.threadCtrl as ctrl">
+
+    <div class="row" ng-repeat="post in ctrl.posts">
+        <div class="col-lg-12">
+            <div class="page-content page-shortcode">
+                <div class="boxedtitle page-title" ng-show="$first">
+                    <h2>{{ctrl.thread.Subject}}</h2>
+                </div>
+
+              <div class="thread-post-userinfo">
+                <p>{{post.UserAuth.FirstName}} {{post.UserAuth.LastName}}</p>
+                <div class="user-profile-img">
+                  <div style="background: #dedede; height:80px; width:80px; text-align: center; vertical-align: middle; display: table-cell; width: 80px">Kein Bild vorhanden</div>
+                </div>
+              </div>
+                
+              <div class="thread-post-userinfo-mobile">
+                  <p>{{post.UserAuth.FirstName}} {{post.UserAuth.LastName}}</p>
+                <p class="postinfo">{{post.Date | date:'dd.MM.yyyy HH:mm'}}</p>
+                <hr />
+              </div>
+
+              <div class="thread-post-textarea">
+                    <p class="postinfo">{{post.Date | date:'dd.MM.yyyy HH:mm'}}</p>
+                    <p ng-bind-html="post.saveText"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="!ctrl.isAuthenticated">
+        <p class="alert alert-info">Damit du hier im Forum schreiben kannst musst du dich anmelden...</p>
+    </div>
+
+    <div class="row" ng-if="ctrl.isAuthenticated">
+        <div class="col-lg-12">
+            <div class="page-content page-shortcode">
+                <div class="boxedtitle page-title">
+                    <h2>Was meinst du dazu?</h2>
+                </div>
+
+                <div text-angular ta-toolbar="[['h1','h2','h3'],['bold','italics'],['undo', 'redo'], ['insertLink'], ['ul', 'ol']]" ng-model="ctrl.answer"></div>
+
+                <br />
+
+                <button class="btn btn-default pull-right" ng-click="ctrl.createNewPost()">Antworten</button>
+            </div>
+        </div>
+    </div>
+</div>

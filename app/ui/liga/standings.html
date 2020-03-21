@@ -1,0 +1,61 @@
+<div ng-include="'app/ui/liga/leagueNavigation.html'"></div>
+
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="page-content">
+            <div class="boxedtitle page-title">
+                <h2>Tabellen</h2>
+            </div>
+
+            <div ng-repeat="league in ctrl.competition.Leagues">
+                <h3 id="league-1">{{ league.Number }}. Liga <small ng-if="league.Group">Gruppe {{ league.Group }}</small> <small>({{league.PlayedGamesPercent | number : 0}}% gespielt)</small></h3>
+                <div class="table-responsive">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">#</th>
+                                <th class="col-md-5">Team</th>
+                                <th class="col-md-1">G</th>
+                                <th class="col-md-1">S</th>
+                                <th class="col-md-1">SV</th>
+                                <!--<th class="col-md-1">U</th>-->
+                                <th class="col-md-1">NV</th>
+                                <th class="col-md-1">N</th>
+                                <th class="col-md-1">Punkte</th>
+                                <th class="col-md-1">SV</th>
+                                <th class="col-md-1">+/-</th>
+                                <!--<th class="col-md-1" tooltip="Finaltag Qualifikation">FT</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class="{ danger: $index > (league.TableEntries.length * 0.75) }" ng-repeat="tableEntry in league.TableEntries">
+                                <td>{{ tableEntry.Rank }}</td>
+                                <td>
+                                    <a href="/teams/{{ tableEntry.TeamId }}">{{ tableEntry.TeamName }}<span ng-if="tableEntry.IsTeamForfaitOut"> (Forfait)</span></a>
+                                </td>
+                                <td colspan="8" ng-if="tableEntry.IsTeamForfaitOut">&nbsp;</td>
+                                <td ng-if="!tableEntry.IsTeamForfaitOut">
+                                    {{ tableEntry.GamesPlayed }} 
+                                    <!--<i ng-if="ctrl.hasEnoughGamesForFinalDay(tableEntry, league) && ctrl.getSelectedDivision() === 1" class="fa fa-warning" style="color: red;" title="Zu viele offene Spiele! Momentan nicht f&uuml;r den Finaltag qualifiziert!" data-toggle="tooltip" data-placement="right"></i>-->
+                                </td>
+
+                                <td ng-if="!tableEntry.IsTeamForfaitOut">{{ tableEntry.GamesWon }}</td>
+                                <td ng-if="!tableEntry.IsTeamForfaitOut">{{ tableEntry.GamesWonExtension }}</td>
+                                <!--<td ng-if="!tableEntry.IsTeamForfaitOut">{{ tableEntry.GamesDraw }}</td>-->
+                                <td ng-if="!tableEntry.IsTeamForfaitOut">{{ tableEntry.GamesLostExtension }}</td>
+                                <td ng-if="!tableEntry.IsTeamForfaitOut">{{ tableEntry.GamesLost }}</td>
+                                <td ng-if="!tableEntry.IsTeamForfaitOut">{{ tableEntry.Points }}</td>
+                                <td ng-if="!tableEntry.IsTeamForfaitOut">{{ tableEntry.SetsWon }}:{{ tableEntry.SetsLost}}</td>
+                                <td ng-if="!tableEntry.IsTeamForfaitOut">{{ (tableEntry.SetsWon - tableEntry.SetsLost) }}</td>
+                                <!--<td ng-if="$index <= (league.TableEntries.length * 0.75) && tableEntry.GamesNotPlayed <= 2 && !tableEntry.IsTeamForfaitOut"><i class="fa fa-check"></i></td>
+                                <td ng-if="$index > (league.TableEntries.length * 0.75) || tableEntry.GamesNotPlayed > 2 || tableEntry.IsTeamForfaitOut"><i class="fa fa-ban" tooltip="{{ctrl.getFinaltagBanInfo(tableEntry)}}"></i></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

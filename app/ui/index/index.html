@@ -1,0 +1,550 @@
+<div class="row" ng-controller="fordere.homeCtrl as ctrl">
+
+    <!--<div class="col-md-12">
+        <article class="page-content fordere-reisli-container" ng-if="ctrl.divisionId === 1">
+            <div class="boxedtitle page-title">
+                <h2>Fordere Reisli</h2>
+            </div>
+
+            <p>Am 4. Januar fahren wir gemeinsam nach Bern. Die Anmeldephase ist bereits durch, alle Infos findest du unter: <a href="/reisli">fordere.ch/reisli</a>.</p>
+        </article>
+    </div>-->
+
+
+    <div class="col-md-8" ng-class="{'col-md-8' : ctrl.season.State !== 'FinalDay'}"
+         ng-class="{'col-md-12' : ctrl.season.State === 'FinalDay'}">
+
+
+        <article class="page-content breaking-news" ng-if="ctrl.breakingnews">
+            <div class="boxedtitle page-title">
+                <h2>Breaking News!</h2>
+            </div>
+
+            <strong>{{ctrl.breakingnews.Title}}</strong>
+
+            <span ng-bind-html="ctrl.breakingnews.Summary"></span>
+
+            <a href="/news/{{ctrl.breakingnews.Id}}" class="news-more">&raquo;Mehr</a>
+        </article>
+
+        <!--<article class="page-content fordere-reisli-container" ng-if="ctrl.divisionId === 1">
+            <div class="boxedtitle page-title">
+                <h2>STS Turnier Zürich</h2>
+            </div>
+
+            <p>Am 23. und 24. Februar organisieren wir zusammen mit dem TFCZ ein Turnier der höchsten Kategorie in Zürich. Du kannst dich jetzt unter folgendem Link anmelden: <a href="/sts">fordere.ch/sts</a>.</p>
+        </article>-->
+        <!-- Vorbereitung Finaltag -->
+        <article class="page-content" ng-if="ctrl.season.State === 'PrepareFinalDay'">
+            <div class="boxedtitle page-title">
+                <h2>Finaltag {{ctrl.season.Name}}</h2>
+            </div>
+
+            <p>
+                <strong>Qualifikation</strong><br />
+                In jeder Liga/Gruppe qualifizieren sich die besten 75% für den Finaltag. <br />
+                Ob ihr qualifiziert seid, seht ihr auf folgender Seite:
+                <ul>
+                    <li ng-repeat="competition in ctrl.season.Competitions"><a href="/leagues/{{competition.Id}}/finalqualification">{{competition.Name}}</a></li>
+                </ul>
+            </p>
+
+            <p ng-bind-html="ctrl.infosFinalDay"></p>
+        </article>
+
+        <!-- Finaltag  test-->
+        <article class="page-content" ng-if="ctrl.season.State === 'FinalDay'">
+            <div class="boxedtitle page-title">
+                <h2>Finaltag {{ctrl.season.Name}}</h2>
+            </div>
+
+            <h4>Laufende Spiele</h4>
+
+            <span class="alert alert-info" ng-show="ctrl.finalDayRunningMatches.length == 0">
+                Keine laufenden Spiele!
+            </span>
+
+            <div class="table-responsive" ng-show="ctrl.finalDayRunningMatches.length > 0">
+                <table class="table table-condensed table-hover">
+                    <tbody>
+                        <tr ng-repeat="match in ctrl.finalDayRunningMatches">
+                            <td class="col-md-1 text-nowrap">Tisch #{{match.FinalDayTableNumber}}</td>
+                            <td class="col-md-3 text-nowrap">{{match.FinalDayCompetitionName}}</td>
+                            <td class="col-md-1">{{match.PlayDate | date:'HH:mm' : 'UTC'}}</td>
+                            <td class="col-md-3 text-right">
+                                <a href="/teams/{{match.HomeTeamId}}" class="truncate">{{match.HomeTeamName}}</a>
+                            </td>
+                            <td class="col-md-1 text-center">vs.</td>
+                            <td class="col-md-3 text-left">
+                                <a href="/teams/{{match.GuestTeamId}}" class="truncate">{{match.GuestTeamName}}</a>
+                            </td>
+                            <td><a href="/matches/{{match.Id}}"><i class="fa fa-sign-in"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Nächste Spiele</h4>
+
+            <span class="alert alert-info" ng-show="ctrl.finalDayUpcommingMatches.length == 0">
+                Keine Spiele offen!
+            </span>
+
+            <div class="table-responsive" ng-show="ctrl.finalDayUpcommingMatches.length > 0">
+                <table class="table table-condensed table-hover">
+                    <tbody>
+                        <tr ng-repeat="match in ctrl.finalDayUpcommingMatches">
+                            <td class="col-md-5 text-nowrap">{{match.FinalDayCompetitionName}}</td>
+                            <td class="col-md-3 text-right">
+                                <a href="/teams/{{match.HomeTeamId}}" class="truncate">{{match.HomeTeamName}}</a>
+                            </td>
+                            <td class="col-md-1 text-center">vs.</td>
+                            <td class="col-md-3 text-left">
+                                <a href="/teams/{{match.GuestTeamId}}" class="truncate">{{match.GuestTeamName}}</a>
+                            </td>
+                            <td><a href="/matches/{{match.Id}}"><i class="fa fa-sign-in"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Zuletzt gespielte Spiele</h4>
+
+            <span class="alert alert-info" ng-show="ctrl.finalDayRecentMatches.length == 0">
+                Es wurden noch keine Spiele ausgetragen!
+            </span>
+
+            <div class="table-responsive" ng-show="ctrl.finalDayRecentMatches.length > 0">
+                <table class="table table-condensed table-hover">
+                    <tbody>
+                        <tr ng-repeat="match in ctrl.finalDayRecentMatches">
+                            <td class="col-md-1 text-nowrap">Tisch #{{match.FinalDayTableNumber}}</td>
+                            <td class="col-md-3 text-nowrap">{{match.FinalDayCompetitionName}}</td>
+                            <td class="col-md-1">{{match.PlayDate | date:'HH:mm' : 'UTC'}}</td>
+                            <td class="col-md-3 text-right" ng-class="{'winnercell' : ctrl.isHomeTeamWin(match)}">
+                                <a href="/teams/{{match.HomeTeamId}}" class="truncate">{{match.HomeTeamName}}</a>
+                            </td>
+                            <td class="col-md-1 text-center">{{match.HomeTeamScore}}:{{match.GuestTeamScore}}</td>
+                            <td class="col-md-3 text-left" ng-class="{'winnercell' : ctrl.isGuestTeamWin(match)}">
+                                <a href="/teams/{{match.GuestTeamId}}" ng-if="!match.IsFreeTicket" class="truncate">{{match.GuestTeamName}}</a>
+                                <span ng-if="match.IsFreeTicket">{{match.GuestTeamName}}</span>
+                            </td>
+                            <td>
+                                <a href="/matches/{{match.Id}}"><i class="fa fa-sign-in"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+        <!-- Running Season-->
+        <div ng-if="ctrl.season.State === 'Running'">
+            <article class="page-content page-shortcode">
+                <div class="boxedtitle page-title">
+                    <h2>Abgemachte Spiele</h2>
+                </div>
+
+                <p class="alert alert-info" ng-if="ctrl.upcommingMatches.length === 0">
+                    Momentan sind keine Matches
+                    abgemacht!
+                </p>
+
+                <div ng-repeat="(playDate, matches) in ctrl.upcommingMatches" ng-cloak>
+                    <h4 class="fordere-booked-game-title">
+                        {{ctrl.formatMatchDate(matches[0].PlayDate)}} <span ng-show="ctrl.isToday(ctrl.formatMatchDate(matches[0].PlayDate))">(Heute)</span>
+                    </h4>
+
+                    <div class="table-responsive" style="margin-bottom: 40px">
+                        <table class="table table-condensed table-hover">
+                            <tbody>
+                                <tr ng-repeat="match in matches">
+                                    <td class="col-md-2" ng-show="ctrl.isFirstMatchInBar($first, matches[$index-1], match)"
+                                        rowspan="{{ctrl.getNumberOfMatchesInThisBar(match.BarName, matches)}}">
+                                        {{match.BarName}}
+                                    </td>
+                                    <td class="col-md-1">
+                                        <small>{{match.PlayDate | date:'HH:mm' : 'UTC'}}</small>
+                                    </td>
+                                    <td class="col-md-3 text-right">
+                                        <a href="/teams/{{match.HomeTeamId}}" class="truncate">{{match.HomeTeamName}}</a>
+                                    </td>
+                                    <td class="col-md-1 text-center">vs.</td>
+                                    <td class="col-md-3 text-left">
+                                        <a href="/teams/{{match.GuestTeamId}}" class="truncate">{{match.GuestTeamName}}</a>
+                                    </td>
+                                    <td class="col-md-2 text-right text-nowrap">
+                                        <small ng-if="match.CompetitionName">
+                                            {{match.LeagueNumber}}. {{
+                                        match.CompetitionName
+                                            }} <span ng-if="match.LeagueGroup != 0"> (G{{match.LeagueGroup}})</span>
+                                        </small>
+                                        <small ng-if="match.CupName">{{ match.CupName }}</small>
+                                    </td>
+                                    <td><a href="/matches/{{match.Id}}"><i class="fa fa-sign-in"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </article>
+            <article class="page-content page-shortcode">
+                <div class="boxedtitle page-title">
+                    <h2>Zuletzt gespielte Spiele</h2>
+                </div>
+
+                <p class="alert alert-info" ng-if="ctrl.recentMatches.length === 0">
+                    In den letzten Tagen wurden keine
+                    Spiele durchgeführt.
+                </p>
+
+                <div ng-repeat="(playDate, matches) in ctrl.recentMatches">
+
+                    <h4 class="fordere-booked-game-title">
+                        {{ctrl.formatMatchDate(matches[0].PlayDate)}} <span ng-show="ctrl.isToday(ctrl.formatMatchDate(matches[0].PlayDate))">(Heute)</span>
+                    </h4>
+
+                    <div class="table-responsive" style="margin-bottom: 40px">
+                        <table class="table table-condensed table-hover">
+                            <tbody>
+                                <tr ng-repeat="match in matches">
+                                    <td class="col-md-1">
+                                        <small>{{match.PlayDate | date:'HH:mm' : 'UTC'}}</small>
+                                    </td>
+                                    <td class="col-md-2">{{match.BarName}}</td>
+                                    <td class="col-md-3 text-right" ng-class="{'winnercell' : ctrl.isHomeTeamWin(match)}">
+                                        <a href="/teams/{{match.HomeTeamId}}" class="truncate">{{match.HomeTeamName}}</a>
+                                    </td>
+                                    <td class="col-md-1 text-center">{{match.HomeTeamScore}}:{{match.GuestTeamScore}}</td>
+                                    <td class="col-md-3 text-left" ng-class="{'winnercell' : ctrl.isGuestTeamWin(match)}">
+                                        <a href="/teams/{{match.GuestTeamId}}" ng-if="!match.IsFreeTicket" class="truncate">{{match.GuestTeamName}}</a>
+                                        <span ng-if="match.IsFreeTicket">{{match.GuestTeamName}}</span>
+                                    </td>
+                                    <td class="col-md-2 text-right text-nowrap">
+                                        <small ng-if="match.CompetitionName">
+                                            {{match.LeagueNumber}}. {{
+                                        match.CompetitionName
+                                            }}<span ng-if="match.LeagueGroup != 0"> (G{{match.LeagueGroup}})</span>
+                                        </small>
+                                        <small ng-if="match.CupName">{{ match.CupName }}</small>
+                                        <a href="/matches/{{match.Id}}"><i class="fa fa-sign-in"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Zwischensaison -->
+        <div class="row" ng-show="!ctrl.season.State || ctrl.season.State === 'PrepareRegistration'">
+            <div class="col-md-6" ng-if="ctrl.divisionId === 3">
+                <div class="page-content">
+                    <div class="boxedtitle page-title">
+                        <h2>Zum ersten Mal hier?</h2>
+                    </div>
+                    <strong>Um was geht es hier überhaupt?</strong> <br />
+
+                    <p>Bei Fordere Luzern meldet man sich mit einem Partner oder einer Partnerin zusammen für eine Töggeli-Saison an. In vier ausgewählten Luzerner Partnerbars wird gegen gleich gesinnte «Plauschtöggeler» im Modus 2 vs. 2 gespielt.</p>
+                    <p>Es gibt dabei verschiedene Ligen mit unterschiedlichen Stärkeklassen – es ist also jeder herzlich willkommen!</p>
+                    <p>Die angemeldeten Teams können die Spiele selbstständig und flexibel untereinander abmachen und sind zuständig für das Eintragen der Resultate auf der Homepage fordere.ch. Am Ende der Saison gibt es dann einen Finaltag.</p>
+                    <p>Weitere Informationen findet ihr <a href="/faq">hier</a></p>
+                </div>
+            </div>
+
+            <div class="col-md-6" ng-if="ctrl.divisionId === 2">
+                <div class="page-content">
+                    <div class="boxedtitle page-title">
+                        <h2>Zum ersten Mal hier? Darum geht's:</h2>
+                    </div>
+                    <p>Fordere ist für alle, die gern Tischfussball spielen und Lust haben, als Team eine Saison lang Matches und Spass mit gleichgesinnten „Töggelern“ zu haben.</p>
+                    <p>Es gibt dabei verschiedene Ligen, sodass ihr gegen Spieler eurer Stärkeklasse spielen könnt - es ist also jeder herzlich willkommen!</p>
+                    <p>Sobald die Saison startet macht ihr eure Spiele selbst ab, zu den Zeiten die für euch passen. Die Matches finden in ausgewählten Partnerbars statt, jeweils einmal in eurer Heimbar und einmal zum Auswärtsspiel, sodass ihr insgesamt etwa 10 - 12 Spiele austragt.</p>
+                    <p>Zum Saisonabschluss erwartet euch der grosse Finaltag mit Siegerehrung, Sonderpreisen und dem Pokalfinale.</p>
+                    <p>Für weitere Infos schaut gern in die <a href="/faq">FAQ</a> oder kontaktiert uns per <a href="mailto:sg@fordere.ch">Mail</a> oder <a href="https://www.facebook.com/forderesg/" target="_blank">Facebook</a>.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6" ng-if="ctrl.divisionId === 1">
+                <div class="page-content">
+                    <div class="boxedtitle page-title">
+                        <h2>Zum ersten Mal hier?</h2>
+                    </div>
+                    Um was geht es hier überhaupt? <br />
+                    Muss ich Profi sein um mitzuspielen? <br />
+                    Was kostet mich der Spass? <br />
+                    Muss ich dann jede Woche Zeit haben? <br />
+                    <hr />
+                    <a href="/faq">&raquo; Hier werden alle deine Fragen beantwortet.</a>
+                </div>
+            </div>
+
+        </div>
+
+        <article class="page-content" ng-if="(!ctrl.season.State || ctrl.season.State === 'PrepareRegistration') && ctrl.divisionId !== 4 ">
+            <div class="boxedtitle page-title">
+                <h2>Die nächste Saison kommt...</h2>
+            </div>
+            <p>
+                Getreu dem Motto "Nach der Saison ist vor der Saison" laufen die Vorbereitungen für die nächste Saison
+                bereits auf Hochtouren. Möchtest du mitspielen? Wenn du noch keinen Account auf fordere.ch hast, dann <a href="/register">registriere</a> dich am besten gleich jetzt!
+            </p>
+
+            <p class="alert alert-info">
+                Wir informieren sämtliche Mitglieder per E-Mail/Facebook sowie hier auf der Webseite sobald die Anmeldephase
+                beginnt.
+            </p>
+        </article>
+
+        <article class="page-content" ng-if="(!ctrl.season.State || ctrl.season.State === 'PrepareRegistration') && ctrl.divisionId === 4 ">
+            <div class="boxedtitle page-title">
+                <h2>fordere Winti – Tischfussball aus Spass</h2>
+            </div>
+            <p>
+                Herzlich Willkommen auf der Homepage vom Verein ‘fordere Winti’. Wir pflegen und fördern in erster Linie den Tischfussballsport in Winterthur im Rahmen einer jährlichen Tischfussballliga und verschiedenen Tischfussballanlässen.
+            </p>
+
+            <p>
+                Bald wirst Du hier Anmeldeinformationen für die erste Saison der Bar-Foos-League in Winti finden.
+                <ul>
+                    <li>Die Saison 19/20 wird ca. von November bis April dauern</li>
+                    <li>Anmeldungen werden in Teams entgegengenommen, finde also jetzt schon deine*n Spielpartner*in…</li>
+                </ul>
+            </p>
+
+            <p>
+                <strong>Intressiert?? <a href="https://winti.fordere.ch/register">Registriere</a> dich am besten gleich jetzt! Wir erinnern dich, sobald die Anmeldephase beginnt.</strong>
+            </p>
+
+        </article>
+
+        <!-- Anmeldephase -->
+        <article class="page-content page-shortcode" ng-if="ctrl.season.State === 'Registration'">
+            <div class="boxedtitle page-title">
+                <h2>Anmeldephase {{ctrl.season.Name}} hat begonnen!</h2>
+            </div>
+
+            <p>Der Sommer ist vorbei, die Tage werden kürzer, es wird wieder getöggelt :-) Ab sofort kannst du dich für die {{ctrl.season.Name}} der Bar-foos-league anmelden.</p>
+
+            <p ng-if="ctrl.divisionId !== 2">
+                <a href="/season/register">Hier</a> gehts direkt zur Anmeldung.
+            </p>
+            
+            <p ng-if="ctrl.divisionId === 2">
+                <a href="/season/register/27">Hier</a> gehts direkt zur Anmeldung.
+            </p>
+
+            <p>Also hopp loos, anmelden, weitersagen, Werbung machen!</p>
+
+            <!--<img ng-src="/assets/divisions/{{ctrl.divisionId}}/{{ctrl.season.Id}}/flyer/registration.jpg" title="Flyer {{ctrl.season.Name}}" />-->
+            <br />
+
+            <br />
+
+
+        </article>
+
+        <article class="page-content page-shortcode" ng-if="ctrl.season.State === 'PrepareSeason'">
+            <div class="boxedtitle page-title">
+                <h2>Anmeldephase vorbei, es geht bald los :-)</h2>
+            </div>
+
+            <p>Die Anmeldephase für die {{ctrl.season.Name}} ist vorbei. Wir teilen nun die Teams in die passende Liga ein. Die Saison startet in Kürze.</p>
+
+            <p ng-bind-html="ctrl.infosPrepareSeason"></p>
+
+            <br />
+        </article>
+
+        <article class="page-content page-shortcode" ng-if="ctrl.season.State === 'EinteilungReady'">
+            <div class="boxedtitle page-title">
+                <h2>Liga Einteilung</h2>
+            </div>
+
+            <p>Das Modusteam hat sämtliche Teams in die passende Liga eingeteilt. Ihr könnt die Einteilung unter folgenden Links einsehen:</p>
+            <ul>
+                <li ng-repeat="competition in ctrl.season.Competitions"><a href="/season/einteilung/{{competition.Id}}">{{competition.Name}}</a></li>
+            </ul>
+
+            <p ng-bind-html="ctrl.infosEinteilung"></p>
+
+        </article>
+    </div>
+
+    <aside class="col-md-4 sidebar" ng-hide="ctrl.season.State === 'FinalDay'">
+        <!-- News -->
+        <div class="widget" ng-if="ctrl.news.length > 0">
+            <h3 class="widget_title">News</h3>
+            <ul class="newslist">
+
+                <li ng-repeat="newsItem in ctrl.news">
+                    <strong>
+                        <span><a href="/news/{{newsItem.Id}}"><span ng-bind-html="newsItem.Title"></span></a></span><br>
+                    </strong>
+                    <small>{{newsItem.User.Name}}, {{newsItem.PostDate | date:'dd.MM.yyyy HH:mm'}}</small>
+                    <br />
+                    <span ng-bind-html="newsItem.Summary"></span>
+                    <a href="/news/{{newsItem.Id}}" style="font-weight: bold;">&raquo;Mehr</a>
+                </li>
+            </ul>
+
+            <hr />
+            <a href="/news"><i class="fa fa-archive"></i>&nbsp;Alte News-Beiträge anzeigen</a>
+        </div>
+
+        <!-- Social Media -->
+        <div class="widget widget_social">
+            <h3 class="widget_title">Find Us</h3>
+            <ul>
+                <li class="facebook-fans" ng-if="ctrl.divisionId === 1">
+                    <a href="https://www.facebook.com/fordere" target="_blank">
+                        <strong>
+                            <i class="fa fa-facebook"></i>
+                            <span>Facebook-Page</span><br>
+                            <small>Like us there...</small>
+                        </strong>
+                    </a>
+                </li>
+                <li class="facebook-fans" ng-if="ctrl.divisionId === 4">
+                    <a href="http://www.facebook.com/fordereWinti" target="_blank">
+                        <strong>
+                            <i class="fa fa-facebook"></i>
+                            <span>Facebook-Page</span><br>
+                            <small>Like us there...</small>
+                        </strong>
+                    </a>
+                </li>
+                <li class="facebook-fans" ng-if="ctrl.divisionId === 3">
+                    <a href="https://www.facebook.com/fordereluzern" target="_blank">
+                        <strong>
+                            <i class="fa fa-facebook"></i>
+                            <span>Facebook-Page</span><br>
+                            <small>Like us there...</small>
+                        </strong>
+                    </a>
+                </li>
+                <li class="facebook-fans" ng-if="ctrl.divisionId === 2">
+                    <a href="https://www.facebook.com/forderesg/" target="_blank">
+                        <strong>
+                            <i class="fa fa-facebook"></i>
+                            <span>Facebook-Page</span><br>
+                            <small>Like us there...</small>
+                        </strong>
+                    </a>
+                </li>
+                <li class="insta-followers" ng-if="ctrl.divisionId === 2">
+                    <a href="https://www.instagram.com/fordere.ch_st.gallen/" target="_blank">
+                        <strong>
+                            <i class="fa fa-instagram"></i>
+                            <span>Instagram-Page</span><br>
+                            <small>Follow us on Instagram...</small>
+                        </strong>
+                    </a>
+                </li>
+                <li class="youtube-subs" ng-if="ctrl.divisionId === 1">
+                    <a href="http://www.youtube.com/channel/UCRY3q7M2YppEKyubAxo4gDA" target="_blank">
+                        <strong>
+                            <i class="fa fa-youtube-play"></i>
+                            <span>Youtube-Channel</span><br>
+                            <small>See us there...</small>
+                        </strong>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="widget" ng-if="ctrl.divisionId === 1">
+            <h3 class="widget_title">Hauptsponsor</h3>
+            <div style="text-align: center">
+                <a href="http://www.amboss.ch" target="_blank">
+                    <img src="../../assets/images/amboss.png"
+                         alt="Hauptsponsor Amboss Bier" />
+                </a>
+            </div>
+        </div>
+		
+		<div class="widget" ng-if="ctrl.divisionId === 2">
+            <h3 class="widget_title">Sponsoren</h3>
+            <div style="text-align: center">
+                <a href="http://www.schuetzengarten.ch" target="_blank">
+                    <img src="../../assets/images/sponsors/schuetzengarten.jpg"
+                         alt="Sponsor Brauerei Schützengarten" />
+                </a>
+				<br />
+				<h4>Brauerei Schützengarten</h4>
+				<a href="mailto://info@schuetzengarten.ch">info@schuetzengarten.ch</a>
+            </div>
+      <br />
+			<div style="text-align: center">
+				<a href="http://beratung.helvetia.ch/expert/franciscogonzalez#" target="_blank">
+                    <img src="../../assets/images/sponsors/helvetia.png"
+                         alt="Sponsor Francisco Gonzalez von Helvetia" />
+                </a>
+				<br />
+				<h4>Francisco Gonzalez</h4>
+				<a href="mailto://francisco.gonzalez@helvetia.ch">francisco.gonzalez@helvetia.ch</a>
+            </div>
+        </div>
+
+        <!-- GC Import -->
+        <div class="widget" ng-if="ctrl.divisionId === 1">
+            <h3 class="widget_title">Tischpartner</h3>
+            <a href="http://www.gc-importservice.ch/" target="_blank">
+                <img src="../../assets/images/gcImportColor.png"
+                     alt="Logo Tischpartner GC Import" />
+            </a>
+        </div>
+
+        <div class="widget" ng-if="ctrl.divisionId === 3">
+            <h3 class="widget_title">Sponsoren</h3>
+            <div style="text-align: center">
+                <img src="../../assets/images/sponsors/tczl.JPG" />
+            </div>
+
+            <hr />
+            <div style="text-align: center">
+                <img src="../../assets/images/sponsors/haifish.jpg" />
+            </div>
+
+            <hr />
+            <div style="text-align: center">
+                <img src="../../assets/images/sponsors/bar59.png" />
+            </div>
+
+            <hr />
+            <div style="text-align: center">
+                <img src="../../assets/images/sponsors/tresor.jpg" />
+            </div>
+
+            <hr />
+            <div style="text-align: center">
+                <img src="../../assets/images/sponsors/bruch.jpg" />
+            </div>
+
+            <hr />
+            <div style="text-align: center">
+                <img src="../../assets/images/sponsors/metzgerhalle.jpg" />
+            </div>
+
+            <hr />
+            <div style="text-align: center">
+                <img src="../../assets/images/sponsors/bettstatt.jpg" />
+            </div>
+
+        </div>
+
+        <div class="widget" ng-if="ctrl.divisionId === 4">
+            <h3 class="widget_title">Sponsoren</h3>
+
+            <h4>Gruppensponsoren</h4>
+
+            1. Liga, Gruppe 1 - FCW Frauen<br />
+            1. Liga, Gruppe 2 - HAKO Getränke<br />
+            2. Liga, Gruppe 1 - Jugglux<br />
+            2. Liga, Gruppe 2 - Hassan Sandwiches<br />
+
+        </div>
+    </aside>
+</div>

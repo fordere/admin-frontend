@@ -1,0 +1,56 @@
+﻿<div class="row" ng-controller="fordere.admin.userDetailCtrl as ctrl">
+    <div class="col-md-9">
+        <div class="page-content">
+            <div class="boxedtitle page-title">
+                <h2>
+                    <span ng-if="!ctrl.isNewUser">Profil Infos </span><span ng-if="ctrl.isNewUser">Neuer Benutzer </span> {{ctrl.user.FirstName}} {{ctrl.user.LastName}}
+                </h2>
+            </div>
+
+            <div class="form-style form-style-4">
+                <form name="profileForm">
+                    <div class="form-inputs clearfix">
+                        <p>
+                            <label class="required">Vorname<span>*</span></label>
+                            <input type="text" ng-model="ctrl.user.FirstName" required />
+                        </p>
+                        <p>
+                            <label class="required">Nachname<span>*</span></label>
+                            <input type="text" ng-model="ctrl.user.LastName">
+                        </p>
+                        <p>
+                            <label class="required">E-Mail<span>*</span></label>
+                            <input type="email" ng-model="ctrl.user.Email" required>
+                        </p>
+                        <p>
+                            <label class="required">Telefon<span>*</span></label>
+                            <input type="text" ng-model="ctrl.user.PhoneNumber">
+                        </p>
+
+                        <p>
+                            <label class="required">Passwort <small ng-if="!ctrl.isNewUser">(wenn Änderung gewünscht)</small><span>*</span></label>
+                            <input type="password" ng-model="ctrl.user.Password">
+                        </p>
+
+                        <!-- TODO: WTF @ this margin -> why the hell iis the btn-group div outside of the paragraph? -->
+                        <p style="margin-bottom: 0">
+                            <label>Admin</label>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" ng-click="ctrl.toggleRole('Admin', true)" ng-class="{ 'active' : ctrl.hasRole('Admin') }">Ja</button>
+                                <button type="button" class="btn btn-default" ng-click="ctrl.toggleRole('Admin', false)" ng-class="{ 'active' : !ctrl.hasRole('Admin') }">Nein</button>
+                            </div>
+                        </p>
+
+                    </div>
+                </form>
+            </div>
+
+            <hr />
+
+            <div class="pull-right">
+                <a href="/admin/users"><button type="cancel" class="btn btn-danger"><span class="fa fa-undo"></span> Zurück</button></a>
+                <button type="submit" ng-click="ctrl.save()" class="btn btn-primary"><span class="fa fa-floppy-o"></span> Speichern</button>
+            </div>
+        </div>
+    </div>
+</div>

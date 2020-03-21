@@ -1,0 +1,39 @@
+<div ng-controller="fordere.admin.finalday.dashboardProgressCtrl as ctrl">
+    <div ng-repeat="competition in ctrl.competitions">
+        <div class="page-content running dashboard-progress" ng-class="{'onhold': competition.CompetitionState == 'OnHold' }">
+
+            <div class="boxedtitle page-title">
+                <h2>{{competition.CompetitionName}}</h2>
+            </div>
+
+            <canvas id="doughnut" class="chart chart-doughnut" chart-data="competition.progress" chart-legend="true"
+                    chart-labels="ctrl.labels"
+                    ng-show="competition.CompetitionState != 'Ready'" ng-hide="competition.CompetitionState == 'Finished'"
+                    height="80px"></canvas>
+
+            <table ng-show="competition.CompetitionState != 'Ready'">
+                <tr><th>Gespielt</th><th>Laufend</th><th>Offen</th></tr>
+                <tr><td>{{competition.MatchesPlayed}}</td><td>{{competition.MatchesRunning}}</td><td>{{competition.MatchesOpen}}</td></tr>
+            </table>
+
+            <p ng-show="competition.CompetitionState != 'Ready' && competition.ExpectedEnd">
+
+                Erwartetes Ende: {{competition.ExpectedEnd | date:"HH:mm"}} <br />
+                Zeit pro Spiel: {{competition.AverageMatchDuration}} Min. <br />
+            </p>
+
+            <button ng-show="competition.CompetitionMode == 'CrazyDyp' && competition.CompetitionState == 'Running'"
+                    ng-disabled="ctrl.newRoundAddInProgress"
+                    ng-click="ctrl.newCrazyDypRound(competition.CompetitionId)" class="btn btn-success btn-xs">
+                Neue Runde
+            </button>
+
+            <hr />
+
+            <button ng-show="competition.CompetitionState == 'Ready'" ng-click="ctrl.start(competition.CompetitionId)" class="btn btn-success btn-xs">Start</button>
+            <button ng-show="competition.CompetitionState == 'Running'" ng-click="ctrl.hold(competition.CompetitionId)" class="btn btn-danger btn-xs">Anhalten</button>
+            <button ng-show="competition.CompetitionState == 'OnHold'" ng-click="ctrl.continue(competition.CompetitionId)" class="btn btn-success btn-xs">Weiterführen</button>
+        </div>
+
+    </div>
+</div>

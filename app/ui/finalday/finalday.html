@@ -1,0 +1,86 @@
+<div class="row" ng-repeat="competition in ctrl.competitions">
+
+    <div class="col-lg-12">
+
+        <div class="page-content">
+            <div class="boxedtitle page-title">
+                <h2>{{competition.CompetitionName}}</h2>
+            </div>
+
+            <div class="alert alert-info" ng-show="competition.CompetitionState == 'Ready'">
+                Dieses Turnier wurde noch nicht gestartet.
+            </div>
+
+            <div ng-show="competition.CompetitionMode == 'CrazyDyp' && competition.CompetitionState != 'Ready'">
+                <h4 ng-show="competition.CompetitionMode != 'CrazyDyp'">Gruppe {{group.Number}}</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">#</th>
+                                <th class="col-md-5">Spieler</th>
+                                <th class="col-md-1">G</th>
+                                <th class="col-md-1">S</th>
+                                <th class="col-md-1">U</th>
+                                <th class="col-md-1">N</th>
+                                <th class="col-md-1">Punkte</th>
+                                <th class="col-md-1">&nbsp;</th>
+                                <th class="col-md-1">+/-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class="{ danger: $index >= group.NumberOfSuccessor }" ng-repeat="tableEntry in competition.Players">
+                                <td>{{ tableEntry.Rank }}</td>
+                                <td>{{ tableEntry.Player.FirstName }} {{ tableEntry.Player.LastName }}</td>
+                                <td>{{ tableEntry.GamesPlayed }}</td>
+                                <td>{{ tableEntry.GamesWon }}</td>
+                                <td>{{ tableEntry.GamesDraw }}</td>
+                                <td>{{ tableEntry.GamesLost }}</td>
+                                <td>{{ tableEntry.Points }}</td>
+                                <td>{{ tableEntry.GoalsScored }}:{{ tableEntry.GoalsConceded}}</td>
+                                <td>{{ (tableEntry.GoalsScored - tableEntry.GoalsConceded) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-repeat="group in competition.Groups" ng-show="competition.CompetitionMode == 'Group' && competition.CompetitionState != 'Ready'">
+                <h4>Gruppe {{group.Number}}</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">#</th>
+                                <th class="col-md-5">Team</th>
+                                <th class="col-md-1">G</th>
+                                <th class="col-md-1">S</th>
+                                <th class="col-md-1">U</th>
+                                <th class="col-md-1">N</th>
+                                <th class="col-md-1">Punkte</th>
+                                <th class="col-md-1">&nbsp;</th>
+                                <th class="col-md-1">+/-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class="{ danger: $index >= group.NumberOfSuccessor }" ng-repeat="tableEntry in group.Standings">
+                                <td>{{ tableEntry.Rank }}</td>
+                                <td><a href="/teams/{{ tableEntry.TeamId }}">{{ tableEntry.TeamName }}</a></td>
+                                <td>{{ tableEntry.GamesPlayed }}</td>
+                                <td>{{ tableEntry.GamesWon }}</td>
+                                <td>{{ tableEntry.GamesDraw }}</td>
+                                <td>{{ tableEntry.GamesLost }}</td>
+                                <td>{{ tableEntry.Points }}</td>
+                                <td>{{ tableEntry.GoalsScored }}:{{ tableEntry.GoalsConceded}}</td>
+                                <td>{{ (tableEntry.GoalsScored - tableEntry.GoalsConceded) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="cup-bracket" cup-bracket matches="competition.SingleKoMatches" ng-show="competition.CompetitionMode == 'SingleKO' && competition.CompetitionState != 'Ready'"></div>
+        </div>
+
+    </div>
+</div>

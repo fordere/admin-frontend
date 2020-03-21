@@ -1,0 +1,26 @@
+﻿<div class="row" ng-controller="fordere.admin.newsCtrl as ctrl">
+  <div class="col-lg-12">
+    <div class="page-content page-shortcode">
+      <div class="boxedtitle page-title">
+        <h2>News</h2>
+      </div>
+      <div class="pull-right">
+        <button type="button" class="btn btn-xs btn-success" ng-click="ctrl.createNews()"><i class="fa fa-pencil"></i> Neue News</button>
+        <br />
+        <br />
+      </div>
+      <div class="table-responsive ">
+        <table class="table table-responsive table-striped table-hover table-condensed">
+          <tbody>
+            <tr ng-repeat="newsItem in ctrl.news" ng-cloak>
+              <td style="min-width: 140px; width: 140px">{{newsItem.PostDate | date:'dd.MM.yyyy HH:mm'}}</td>
+              <td>{{newsItem.Title}}</td>
+              <td width="30"><span ng-hide="newsItem.IsPublished" class="label label-warning">versteckt</span></td>
+              <td><a href="/admin/news/{{newsItem.Id}}" class="pull-right btn btn-info btn-xs">editieren</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+﻿<div class="row" ng-controller="fordere.admin.seasonCtrl as ctrl">
+
+    <div class="page-content page-shortcode col-md-12">
+        <div class="boxedtitle page-title">
+            <h2>Seasons</h2>
+        </div>
+        <div>
+            <table class="table table-responsive table-striped table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>State</th>
+                        <th>&nbsp;</th>
+                        <th><span class="pull-right">Spielbetrieb</span></th>
+                        <th><span class="pull-right">Finaltag</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="season in ctrl.seasons ">
+                        <td>{{ season.Name }}</td>
+                        <td>{{ctrl.getStateName(season.State)}}</td>
+                        <td>
+                            <a href="/admin/seasons/{{season.Id}}" class="pull-right btn btn-primary btn-xs" style="margin-left: 10px"><i class="fa fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <a href="/admin/season/{{season.Id}}/competitions" class="pull-right btn btn-info btn-xs" style="margin-left: 10px">Spielbetrieb</a>
+                            <a href="/admin/season/{{season.Id}}/payment" class="pull-right btn btn-info btn-xs" style="margin-left: 10px">Mitgliederbeiträge</a>
+                        </td>
+                        <td>
+                            <a href="/admin/finalday/{{season.FinalDay.Id}}/dashboard" class="pull-right btn btn-success btn-xs" style="margin-left: 10px" ng-if="season.FinalDay">Dashboard</a>
+                            <a href="/admin/season/{{season.Id}}/finalday/qualification" class="pull-right btn btn-success btn-xs" style="margin-left: 10px">Qualifikation</a>
+                            <a href="/admin/finalday/{{season.FinalDay.Id}}/detail" class="pull-right btn btn-success btn-xs" style="margin-left: 10px">Definition</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br />
+
+        <div class="pull-right">
+            <a href="/admin/seasons/0" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Neue Saison erstellen</a>
+        </div>
+    </div>
+</div>

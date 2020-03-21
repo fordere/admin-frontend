@@ -1,0 +1,16 @@
+<div class="row" ng-controller="fordere.newsDetailCtrl as ctrl">
+  <div class="col-lg-12">
+    <div class="page-content page-shortcode">
+      <div class="boxedtitle page-title">
+        <h2>{{ctrl.news.Title}}</h2>
+      </div>
+     
+      <p ng-bind-html="ctrl.newsContent"></p>
+
+      <hr />
+
+      <small>Erfasst am {{ctrl.news.PostDate | date:'dd.MM.yyyy HH:mm'}} von {{ctrl.news.User.Name}}</small>
+
+    </div>
+  </div>
+</div>

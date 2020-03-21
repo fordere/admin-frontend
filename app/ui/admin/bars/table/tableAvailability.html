@@ -1,0 +1,82 @@
+﻿<div ng-controller="fordere.admin.tableAvailabilityCtrl as ctrl">
+    <div class="row">
+
+        <div class="col-lg-9">
+            <div class="page-content">
+                <div class="boxedtitle page-title"><h2>Tischverfügbarkeiten ({{ctrl.selectedTable.BarName}} - {{ctrl.selectedTable.Name}})</h2></div>
+
+                <table class="table table-responsive table-hover table-condensed table-striped" ng-if="ctrl.availabilities.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Wochentag erster Timeslot</th>
+                            <th>Erster Timeslot</th>
+                            <th>Wochentag letzter Timeslot</th>
+                            <th>Letzter Timeslot</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="availability in ctrl.availabilities">
+                            <td>{{ availability.FirstTimeSlotDayOfWeek | dayofweek}}</td>
+                            <td>{{ availability.FirstTimeSlot | date : 'HH:mm' : 'UTC'}}</td>
+                            <td>{{ availability.LastTimeSlotDayOfWeek | dayofweek }}</td>
+                            <td>{{ availability.LastTimeSlot | date : 'HH:mm' : 'UTC'}}</td>
+                            <td><button ng-click="ctrl.deleteAvailability(availability.Id)" class="btn btn-xs btn-danger pull-right">Löschen</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="alert alert-info" ng-if="ctrl.availabilities.length === 0">Keine Timeslots definiert</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="page-content">
+                <div class="boxedtitle page-title"><h2>Hinzufügen</h2></div>
+
+                <div class="form-group">
+                    <label for="dayOfWeek">Wochentag erster Timeslot</label>
+
+                    <select name="dayOfWeek" class="form-control" ng-model="ctrl.availabilityToAdd.FirstTimeSlotDayOfWeek">
+                        <option value="1">Montag</option>
+                        <option value="2">Dienstag</option>
+                        <option value="3">Mittwoch</option>
+                        <option value="4">Donnerstag</option>
+                        <option value="5">Freitag</option>
+                        <option value="6">Samstag</option>
+                        <option value="0">Sonntag</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstTimeSlot">Erster Timeslot</label>
+                    <select name="firstTimeSlot" class="form-control" ng-model="ctrl.availabilityToAdd.FirstTimeSlot" ng-options="(time | date:'HH:mm' ) for time in ctrl.possibleTimeSlots"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dayOfWeek">Wochentag letzter Timeslot</label>
+
+                    <select name="dayOfWeek" class="form-control" ng-model="ctrl.availabilityToAdd.LastTimeSlotDayOfWeek">
+                        <option value="1">Montag</option>
+                        <option value="2">Dienstag</option>
+                        <option value="3">Mittwoch</option>
+                        <option value="4">Donnerstag</option>
+                        <option value="5">Freitag</option>
+                        <option value="6">Samstag</option>
+                        <option value="0">Sonntag</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastTimeSlot">Letzter Timeslot</label>
+                    <select name="lastTimeSlot" class="form-control" ng-model="ctrl.availabilityToAdd.LastTimeSlot" ng-options="(time | date:'HH:mm' ) for time in ctrl.possibleTimeSlots"></select>
+                </div>
+
+                <button class="btn btn-info" ng-click="ctrl.addAvailability()">Hinzufügen</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

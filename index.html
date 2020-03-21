@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <base href="/" />
+
+    <meta charset="utf-8">
+    <title>fordere.ch - Tischfussball Liga Zürich</title>
+    <meta name="description" content="fordere.ch - Tischfussball Liga">
+    <meta name="author" content="Bar-foos-league">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- cdn stuff -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/01_existing/01_base.css?v=90" />
+    <link rel="stylesheet" href="/css/01_existing/02_bootstrap-glyphicons.css?v=90" />
+    <link rel="stylesheet" href="/css/01_existing/03_bootstrap.min.css?v=90" />
+    <link rel="stylesheet" href="/css/01_existing/04_jquery.bracket.min.css?v=90" />
+    <link rel="stylesheet" href="/css/01_existing/05_responsive.css?v=90" />
+    <link rel="stylesheet" href="/css/01_existing/06_style.css?v=90" />
+    <link rel="stylesheet" href="/css/02_compiled/01_colors.css?v=90" />
+    <link rel="stylesheet" href="/css/02_compiled/02_fordere.css?v=90" />
+    <link rel="stylesheet" href="/css/02_compiled/03_templateColors.css?v=90" />
+    <link rel="stylesheet" href="/css/02_compiled/04_menu.css?v=90" />
+    <link rel="stylesheet" href="/lib/toastr/toastr.css?v=90" />
+    <link rel="stylesheet" href="/lib/leaflet/dist/leaflet.css?v=90" />
+    <!-- endinject -->
+
+    <link rel="shortcut icon" href="assets/images/logo_small.ico" />
+
+</head>
+
+<body ng-app="fordere">
+
+    <div id="wrap" class="grid_1200" ng-controller="fordere.indexCtrl as ctrl">
+        <login ng-if="!ctrl.isFullScreenMode()"></login>
+
+        <header ng-if="!ctrl.isFullScreenMode()" ng-include="'app/ui/layout/header.html'" id="header" ng-class="{'fordere-sg': ctrl.isDivision(2), 'fordere-lu': ctrl.isDivision(3), 'fordere-winti': ctrl.isDivision(4)}"></header>
+
+        <div ng-if="!ctrl.isFullScreenMode()" ng-include="'app/ui/layout/breadcrumbs.html'" class="breadcrumbs" ng-class="{'fordere-sg': ctrl.isDivision(2), 'fordere-lu': ctrl.isDivision(3), 'fordere-winti': ctrl.isDivision(4)}"></div>
+        <div ng-if="!ctrl.isFullScreenMode()" ng-include="'app/ui/layout/myday.html'" class="myday"></div>
+
+        <section class="container main-content" ng-view></section>
+
+        <footer ng-if="!ctrl.isFullScreenMode()" ng-include="'app/ui/layout/footer.html'" id="footer"></footer>
+        <footer ng-if="!ctrl.isFullScreenMode()" ng-include="'app/ui/layout/footer_bottom.html'" id="footer-bottom"></footer>
+    </div>
+
+    <!-- cdn stuff -->
+    <!-- end cdn stuff-->
+    <!-- inject:js -->
+    <script src="/lib/jquery/dist/jquery.min.js?v=90"></script>
+    <script src="/lib/jquery-bracket/dist/jquery.bracket.min.js?v=90"></script>
+    <script src="/lib/angular/angular.min.js?v=90"></script>
+    <script src="/lib/angular-route/angular-route.min.js?v=90"></script>
+    <script src="/lib/angular-resource/angular-resource.min.js?v=90"></script>
+    <script src="/lib/angular-stripe-checkout/angular-stripe-checkout.min.js?v=90"></script>
+    <script src="/lib/angular-cookies/angular-cookies.min.js?v=90"></script>
+    <script src="/lib/textAngular/dist/textAngular-rangy.min.js?v=90"></script>
+    <script src="/lib/textAngular/dist/textAngular-sanitize.min.js?v=90"></script>
+    <script src="/lib/textAngular/dist/textAngular.min.js?v=90"></script>
+    <script src="/lib/ngstorage/ngStorage.min.js?v=90"></script>
+    <script src="/lib/angular-bootstrap/ui-bootstrap-tpls.min.js?v=90"></script>
+    <script src="/lib/toastr/toastr.min.js?v=90"></script>
+    <script src="/lib/moment/min/moment.min.js?v=90"></script>
+    <script src="/lib/angular-recaptcha/release/angular-recaptcha.min.js?v=90"></script>
+    <script src="/lib/angulartics/dist/angulartics.min.js?v=90"></script>
+    <script src="/lib/angulartics-google-analytics/dist/angulartics-ga.min.js?v=90"></script>
+    <script src="/lib/ng-sortable/dist/ng-sortable.min.js?v=90"></script>
+    <script src="/lib/chart.js/dist/Chart.min.js?v=90"></script>
+    <script src="/lib/angular-chart.js/dist/angular-chart.min.js?v=90"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js?v=90"></script>
+    <script src="/lib/underscore/underscore-min.js?v=90"></script>
+    <script src="/lib/leaflet/dist/leaflet.js?v=90"></script>
+    <script src="/lib/angular-simple-logger/dist/angular-simple-logger.min.js?v=90"></script>
+    <script src="/lib/ui-leaflet/dist/ui-leaflet.min.js?v=90"></script>
+    <script src="/assets/ng-breadcrumbs.min.js?v=90"></script>
+    <script src="/app/app.js?v=90"></script>
+    <script src="/app/config.js?v=90"></script>
+    <script src="/app/constants.js?v=90"></script>
+    <script src="/app/filter.js?v=90"></script>
+    <script src="/app/indexCtrl.js?v=90"></script>
+    <script src="/app/routeConfig.js?v=90"></script>
+    <script src="/app/templates.js?v=90"></script>
+    <script src="/app/directives/activeLink.js?v=90"></script>
+    <script src="/app/directives/cupBracketDirective.js?v=90"></script>
+    <script src="/app/directives/login.js?v=90"></script>
+    <script src="/app/directives/loginslidercloser.js?v=90"></script>
+    <script src="/app/directives/ngDebounce.js?v=90"></script>
+    <script src="/app/directives/popup.js?v=90"></script>
+    <script src="/app/directives/showByDateDirective.js?v=90"></script>
+    <script src="/app/directives/spy.js?v=90"></script>
+    <script src="/app/directives/timer.js?v=90"></script>
+    <script src="/app/directives/toggle.js?v=90"></script>
+    <script src="/app/infrastructure/authHttpResponseInterceptor.js?v=90"></script>
+    <script src="/app/infrastructure/authService.js?v=90"></script>
+    <script src="/app/infrastructure/bearerTokenInterceptor.js?v=90"></script>
+    <script src="/app/infrastructure/captchaProvider.js?v=90"></script>
+    <script src="/app/infrastructure/dialogService.js?v=90"></script>
+    <script src="/app/infrastructure/divisionHolder.js?v=90"></script>
+    <script src="/app/infrastructure/toastrService.js?v=90"></script>
+    <script src="/app/infrastructure/typeExtensions.js?v=90"></script>
+    <script src="/app/rest/barService.js?v=90"></script>
+    <script src="/app/rest/competitionService.js?v=90"></script>
+    <script src="/app/rest/contactService.js?v=90"></script>
+    <script src="/app/rest/cupService.js?v=90"></script>
+    <script src="/app/rest/divisionService.js?v=90"></script>
+    <script src="/app/rest/einteilungService.js?v=90"></script>
+    <script src="/app/rest/finalDayGroupService.js?v=90"></script>
+    <script src="/app/rest/finalDayMatchService.js?v=90"></script>
+    <script src="/app/rest/finalDayService.js?v=90"></script>
+    <script src="/app/rest/finalDayStandingsService.js?v=90"></script>
+    <script src="/app/rest/finalDayTableService.js?v=90"></script>
+    <script src="/app/rest/finalDayTeamService.js?v=90"></script>
+    <script src="/app/rest/finalDayTournamentService.js?v=90"></script>
+    <script src="/app/rest/fordereResource.js?v=90"></script>
+    <script src="/app/rest/forumService.js?v=90"></script>
+    <script src="/app/rest/httpRequestInterceptor.js?v=90"></script>
+    <script src="/app/rest/kozoomService.js?v=90"></script>
+    <script src="/app/rest/leagueService.js?v=90"></script>
+    <script src="/app/rest/mailingListService.js?v=90"></script>
+    <script src="/app/rest/matchService.js?v=90"></script>
+    <script src="/app/rest/myUserProfile.js?v=90"></script>
+    <script src="/app/rest/newsService.js?v=90"></script>
+    <script src="/app/rest/passwordRecovery.js?v=90"></script>
+    <script src="/app/rest/paymentService.js?v=90"></script>
+    <script src="/app/rest/registrationService.js?v=90"></script>
+    <script src="/app/rest/seasonService.js?v=90"></script>
+    <script src="/app/rest/shortNewsService.js?v=90"></script>
+    <script src="/app/rest/smsService.js?v=90"></script>
+    <script src="/app/rest/statisticsService.js?v=90"></script>
+    <script src="/app/rest/tableService.js?v=90"></script>
+    <script src="/app/rest/teamInscriptionService.js?v=90"></script>
+    <script src="/app/rest/teamService.js?v=90"></script>
+    <script src="/app/rest/tournamenRegistrationService.js?v=90"></script>
+    <script src="/app/rest/usersService.js?v=90"></script>
+    <script src="/app/ui/archive/archiveCtrl.js?v=90"></script>
+    <script src="/app/ui/bars/barCtrl.js?v=90"></script>
+    <script src="/app/ui/contact/contactCtrl.js?v=90"></script>
+    <script src="/app/ui/division/divisionSelectionCtrl.js?v=90"></script>
+    <script src="/app/ui/faq/faqCtrl.js?v=90"></script>
+    <script src="/app/ui/finalday/finaldayCtrl.js?v=90"></script>
+    <script src="/app/ui/forum/newThreadCtrl.js?v=90"></script>
+    <script src="/app/ui/forum/threadCtrl.js?v=90"></script>
+    <script src="/app/ui/forum/threadListCtrl.js?v=90"></script>
+    <script src="/app/ui/index/homeCtrl.js?v=90"></script>
+    <script src="/app/ui/layout/breadcrumbCtrl.js?v=90"></script>
+    <script src="/app/ui/layout/loginCtrl.js?v=90"></script>
+    <script src="/app/ui/layout/menuCtrl.js?v=90"></script>
+    <script src="/app/ui/layout/mydayCtrl.js?v=90"></script>
+    <script src="/app/ui/liga/cupTreeCtrl.js?v=90"></script>
+    <script src="/app/ui/liga/leagueNavigationCtrl.js?v=90"></script>
+    <script src="/app/ui/liga/standingsCtrl.js?v=90"></script>
+    <script src="/app/ui/liga/teamsCtrl.js?v=90"></script>
+    <script src="/app/ui/profile/passwordLostCtrl.js?v=90"></script>
+    <script src="/app/ui/profile/profileCtrl.js?v=90"></script>
+    <script src="/app/ui/profile/registerUserCtrl.js?v=90"></script>
+    <script src="/app/ui/news/newsDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/news/newsListCtrl.js?v=90"></script>
+    <script src="/app/ui/match/matchDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/recovery/newPasswordCtrl.js?v=90"></script>
+    <script src="/app/ui/team/teamProfileCtrl.js?v=90"></script>
+    <script src="/app/ui/season/einteilungCtrl.js?v=90"></script>
+    <script src="/app/ui/season/myseasonCtrl.js?v=90"></script>
+    <script src="/app/ui/season/paymentCtrl.js?v=90"></script>
+    <script src="/app/ui/season/registerCtrl.js?v=90"></script>
+    <script src="/app/ui/season/registerdetailCtrl.js?v=90"></script>
+    <script src="/app/ui/season/statisticsCtrl.js?v=90"></script>
+    <script src="/app/ui/season/termineCtrl.js?v=90"></script>
+    <script src="/app/ui/verein/statutenCtrl.js?v=90"></script>
+    <script src="/app/ui/verein/vereinCtrl.js?v=90"></script>
+    <script src="/app/ui/turniere/tournamentregistrationCtrlSff.js?v=90"></script>
+    <script src="/app/ui/turniere/tournamentregistrationCtrlSts.js?v=90"></script>
+    <script src="/app/ui/admin/bars/barDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/bars/barsCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/mailinglist/mailingListCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/kozoom/kozoomCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/news/newsCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/news/newsDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/sms/smsSenderCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/user/userDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/user/usersCtrl.js?v=90"></script>
+    <script src="/app/ui/liga/legacyfinal/finalCtrl.js?v=90"></script>
+    <script src="/app/ui/season/rules/rulesCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/bars/table/tableAvailabilityCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/bars/table/tableCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/bars/table/tableDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/competition/competitionDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/competition/competitionsCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/competition/leagueDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/competition/leagueSpielbetriebCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/competition/leaguesCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/cup/cupDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/cup/cupsCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/payment/paymentCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/finalday/competitionDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/finalday/dashboard.js?v=90"></script>
+    <script src="/app/ui/admin/season/finalday/dashboardProgressCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/finalday/finaldayEditCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/finalday/finishedMatchesCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/finalday/qualificationCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/season/seasonCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/season/seasonDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/teaminscription/teamInscriptionDetailCtrl.js?v=90"></script>
+    <script src="/app/ui/admin/season/teaminscription/teamInscriptionsCtrl.js?v=90"></script>
+    <script src="/assets/template/js/tabs.js?v=90"></script>
+    <!-- endinject -->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-55449424-1', 'auto');
+
+    </script>
+
+</body>
+
+</html>

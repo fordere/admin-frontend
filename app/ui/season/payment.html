@@ -1,0 +1,84 @@
+﻿
+<div ng-controller="fordere.paymentCtrl as ctrl">
+
+    <p class="alert alert-success" ng-if="!ctrl.hasOpenEntries">Danke! Wir haben deinen Beitrag erhalten! Viel Spass in der Saison :-)</p>
+
+    <div class="row" ng-if="ctrl.hasOpenEntries">
+
+        <div class="col-md-4">
+            <div class="page-content page-shortcode">
+                <div class="box_icon">
+                    <div class="boxedtitle page-title">
+                        <h2>Kreditkarte</h2>
+                    </div>
+
+                    <table class="payment-table">
+                        <tr class="row-player" ng-repeat="payment in ctrl.openpayments">
+                            <td>{{payment.Name}}</td>
+                            <td>{{payment.Amount | currency : 'CHF' : 2}}</td>
+                        </tr>
+                        <tr class="row-payment-taxes">
+                            <td>Kosten Bezahlsystem</td>
+                            <td>{{ctrl.paymenttaxes | currency : 'CHF' : 2}}</td>
+                        </tr>
+                        <tr class="row-total">
+                            <td>Total</td>
+                            <td>{{ctrl.total + ctrl.paymenttaxes | currency : 'CHF' : 2}}</td>
+                        </tr>
+                    </table>
+
+                    <button class="btn btn-success" ng-click="ctrl.doCheckout()" ng-disabled="ctrl.paymentInProgress">
+                        <i ng-if="ctrl.paymentInProgress" class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                        <span>Jetzt Bezahlen</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="page-content page-shortcode">
+                <div class="box_icon">
+                    <div class="boxedtitle page-title">
+                        <h2>&Uuml;berweisung</h2>
+                    </div>
+                    <table class="payment-table">
+                        <tr class="row-player" ng-repeat="payment in ctrl.openpayments">
+                            <td>{{payment.Name}}</td>
+                            <td>{{payment.Amount | currency : 'CHF' : 2}}</td>
+                        </tr>
+                        <tr class="row-payment-taxes">
+                            <td>Kosten Bezahlsystem</td>
+                            <td>0.00 CHF</td>
+                        </tr>
+                        <tr class="row-total">
+                            <td>Total</td>
+                            <td>{{ctrl.total | currency : 'CHF' : 2}}</td>
+                        </tr>
+                    </table>
+
+                    <hr />
+
+                    <p ng-bind-html="ctrl.bankInformations"></p>
+
+                    <p class="alert alert-info">Bitte bei der Überweisung euren Teamnamen angeben.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="page-content page-shortcode">
+                <div class="box_icon">
+                    <div class="boxedtitle page-title">
+                        <h2>Bar</h2>
+                    </div>
+                    <p>Leider können wir keine Beträge bar entgegen nehmen. Dies führt jeweils zu einem Durcheinander und kann im Nachhinein nicht mehr nachvollzogen werden.</p>
+                    <p>Bitte benutzt eure Kreditkarte oder die gute alte Überweisung.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

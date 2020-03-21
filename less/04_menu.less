@@ -1,0 +1,167 @@
+﻿@import "01_colors.less";
+
+#menu {
+    /*Strip the ul of padding and list styling*/
+    margin-top: 24px;
+    float: right;
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        z-index: 1000;
+    }
+
+    > li {
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+    /*Create a horizontal list with spacing*/
+    li {
+        display: inline-block;
+        float: left;
+        margin-right: 30px;
+        font-weight: bold;
+        font-size: 14px;
+        z-index: 1000;
+        /*Style for menu links*/
+        a {
+            display: block;
+            padding-left: 9px;
+            padding-right: 9px;
+            height: 36px;
+            text-align: center;
+            line-height: 36px;
+            color: #fff;
+            text-decoration: none;
+            z-index: 1000;
+            border-radius: 2px;
+        }
+
+        &:hover {
+            a {
+                /*Hover state for top level links*/
+                background: @maincolor;
+            }
+        }
+    }
+    /*Style for dropdown links*/
+    li:hover ul a {
+        background: white;
+        color: black;
+        height: 36px;
+        line-height: 36px;
+        text-align: left;
+        border-radius: 0;
+    }
+    /*Hover state for dropdown links*/
+    li:hover ul a:hover {
+        background: @maincolor;
+        color: #fff;
+    }
+    /*Hide dropdown links until they are needed*/
+    li ul {
+        display: none;
+    }
+    /*Make dropdown links vertical*/
+    li ul li {
+        display: block;
+        float: none;
+        font-weight: normal;
+    }
+    /*Prevent text wrapping*/
+    li ul li a {
+        width: auto;
+        min-width: 100px;
+        padding: 0 20px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    /*Display the dropdown on hover*/
+    li a:hover + .submenu, .submenu:hover {
+        display: block;
+    }
+    /*Style 'show menu' label button and hide it by default*/
+    .show-menu {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-decoration: none;
+        color: #fff;
+        background: #19c589;
+        text-align: center;
+        padding: 10px 0;
+        display: none;
+    }
+}
+
+.mobileMenuLabel {
+    display: none;
+    margin-bottom: 1px;
+    /*Show menu when invisible checkbox is checked*/
+    &:checked ~ #menu {
+        display: block;
+    }
+}
+
+@media screen and (max-width : 1200px) {
+    #menu {
+        /*Make dropdown links appear inline*/
+        position: static;
+        display: none;
+        padding: 0;
+        margin-top: 0;
+        width: 100%;
+
+        ul {
+            position: static;
+            display: none;
+            margin-left: 0;
+            -webkit-padding-start: 0;
+        }
+        /*Create vertical spacing*/
+        li {
+            margin-bottom: 1px;
+            margin-left: 0;
+            background: white;
+
+            &:hover {
+                a {
+                    background: white;
+                    color: @maincolor;
+                }
+            }
+        }
+        /*Make all menu links full width*/
+        li, li ul li a {
+            width: 100%;
+        }
+
+        li a {
+            color: black;
+            text-align: left;
+            font-weight: normal;
+        }
+    }
+    /*Display 'show menu' link*/
+    .mobileMenuLabel {
+        display: block;
+        background-color: white;
+        padding: 2px 8px;
+        line-height: 30px;
+
+        &:before {
+            content: "\f0c9";
+            font-family: "FontAwesome";
+            height: 48px;
+            width: 48px;
+            text-align: center;
+            color: black;
+            padding-right: 10px;
+        }
+    }
+
+    #header {
+        height: auto;
+    }
+}

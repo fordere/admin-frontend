@@ -1,0 +1,265 @@
+﻿<div ng-controller="fordere.admin.leagueSpielbetriebCtrl as ctrl">
+
+    <p class="alert alert-warning" ng-show="!ctrl.isCompetitionReady">
+        Wettbewerb ist noch nicht komplett vorbereitet! Sind alle Teams zugewiesen? Teams die keiner Liga zugewiesen wurden müssen anschliessend manuell noch hinzugefügt werden!
+        <br />
+        <br />
+        <button class="btn btn-primary" ng-click="ctrl.startCompetition()">Teams & Matches erstellen</button>
+
+    </p>
+
+    <p class="alert alert-info" ng-show="ctrl.isCompetitionReady && !ctrl.isCompetitionCreated">
+        Wettbewerb wurde noch nicht gestartet! Beim Start werden aus den Anmeldungen die Teams erstellt und die Matches generiert! <strong>
+            Sobald dieser
+            Vorgang durchgeführt wurde sind keine Anmeldungen mehr möglich!
+        </strong>
+        <br /> <br />
+        <button class="btn btn-primary" ng-click="ctrl.startCompetition()">Teams & Matches erstellen</button>
+    </p>
+
+    <div class="row" ng-show="ctrl.isCompetitionReady && ctrl.isCompetitionCreated">
+
+        <div class="col-lg-9">
+            <div class="page-content">
+                <div class="boxedtitle page-title"><h2>Spiele</h2></div>
+
+                <label>Team</label><br />
+                <input type="text" class="form-control" ng-model="ctrl.teamFilter"/>
+
+                <br />
+                <br />
+
+                <table class="table table-responsive table-hover table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>Heimteam</th>
+                            <th>Gastteam</th>
+                            <th>Resultat</th>
+                            <th colspan="2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="match in ctrl.filteredMatches">
+                            <td>{{ match.HomeTeamName | limitTo:25 }}<span ng-if="match.HomeTeamName.length > 25">...</span></td>
+                            <td>{{ match.GuestTeamName | limitTo:25 }}<span ng-if="match.GuestTeamName.length > 25">...</span></td>
+                            <td ng-if="!match.PlayDate"></td>
+                            <td ng-if="match.PlayDate">{{ match.HomeTeamScore || 0 }} : {{ match.GuestTeamScore || 0 }}</td>
+                            <td><button class="btn btn-primary btn-xs pull-right" ng-click="ctrl.editMatch(match)">Bearbeiten</button></td>
+                            <td><a class="btn btn-primary btn-xs pull-right" href="/matches/{{match.Id}}">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="page-content">
+                <div class="boxedtitle page-title">
+                    <h2>Team verschieben</h2>
+                </div>
+                <form role="form" name="form" novalidate>
+                    <div class="form-group">
+                        <label for="teamToMove">Team:</label>
+                        <select required name="teamToMove" ng-options="team.Id as team.Name for team in ctrl.teams" ng-model="ctrl.selectedTeam"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="targetLeague">Verschieben nach:</label>
+                        <select required name="targetLeague" ng-options="league.Id as ctrl.formatLeagueText(league) for league in ctrl.leagues" ng-model="ctrl.targetLeague"></select>
+                    </div>
+                    <div ng-show="form.$valid" class="alert alert-warning"><small><strong>Achtung:</strong> Bereits gespielte Spiele werden gelöscht!</small></div>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="ctrl.submitMoveTeam()" ng-disabled="form.$invalid">Verschieben</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="page-content">
+                <div class="boxedtitle page-title">
+                    <h2>Team löschen</h2>
+                </div>
+
+                <form role="form" name="formDeleteTeam" novalidate>
+                    <div class="form-group">
+                        <label for="teamDelete">Team:</label>
+                        <select required name="teamDelete" ng-options="team.Id as team.Name for team in ctrl.teams" ng-model="ctrl.teamToDelete"></select>
+                    </div>
+                    <div ng-show="formDeleteTeam.$valid" class="alert alert-warning"><small><strong>Achtung:</strong> Bereits gespielte Spiele werden gelöscht!</small></div>
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="ctrl.deleteTeam()" ng-disabled="formDeleteTeam.$invalid">Löschen</button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Edit Team -->
+        <div class="col-lg-3">
+            <div class="page-content">
+                <div class="boxedtitle page-title">
+                    <h2>Team bearbeiten</h2>
+                </div>
+
+                <form role="form" name="formEditTeam" novalidate>
+                    <div class="form-group">
+                        <label for="teamEdit">Team:</label>
+                        <select required name="teamEdit" ng-options="team as team.Name for team in ctrl.teams" ng-model="ctrl.teamToEdit"></select>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="ctrl.editTeam()" ng-disabled="!ctrl.teamToEdit">Bearbeiten</button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Create Team from TeamInscription -->
+        <div class="col-lg-3">
+            <div class="page-content">
+                <div class="boxedtitle page-title">
+                    <h2>Team einteilen</h2>
+                </div>
+
+                <form role="form" name="formEditTeam" novalidate ng-show="ctrl.teamInscriptions.length > 0">
+                    <div class="form-group">
+                        <label for="teamEdit">Anmeldung:</label>
+                        <select required name="teamEdit" ng-options="team as team.Name for team in ctrl.teamInscriptions" ng-model="ctrl.teaminscriptionToAssign"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teamEdit">Liga:</label>
+                        <select required name="leagueAssign" ng-options="league as league.Number +'. Liga Gruppe ' + league.Group for league in ctrl.leagues" ng-model="ctrl.leagueToAssign"></select>
+                    </div>
+
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="ctrl.assignTeamInscription()" ng-disabled="!ctrl.teaminscriptionToAssign || !ctrl.leagueToAssign">Zuweisen</button>
+                </form>
+
+                <p ng-hide="ctrl.teamInscriptions.length > 0" class="alert alert-info">
+                    Alle Teams zugewiesen!
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Finish season -->
+        <div class="col-lg-3">
+            <div class="page-content">
+                <div class="boxedtitle page-title">
+                    <h2>Liga abschliessen</h2>
+                </div>
+
+                <form role="form" name="formEditTeam" novalidate>
+                    <input type="checkbox" ng-model="ctrl.isSetMatchesToNotPlayedConfirmed" /> Saison abschliessen
+                    <br />
+                    <br />
+                    <p ng-show="ctrl.isSetMatchesToNotPlayedConfirmed" class="alert alert-danger">Diese Aktion schliesst die Saison ab. D.h. alle nicht gespielten Spiele werden gewertet!</p>
+                    <button type="button" class="btn btn-sm btn-danger" ng-show="ctrl.isSetMatchesToNotPlayedConfirmed" ng-click="ctrl.setMatchesToNotPlayed()">Matches updaten</button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="editTeamDialog" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Schliessen</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Team bearbeiten</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <label>Name:</label>
+                            <input class="form-control" type="text" ng-model="ctrl.teamToEdit.Name" />
+                        </div>
+                        <div class="col-xs-12 form-group">
+                            <label>Spieler 1 ID:</label>
+                            <input class="form-control" type="number" ng-model="ctrl.teamToEdit.Player1Id" />
+                        </div>
+                        <div class="col-xs-12 form-group">
+                            <label>Spieler 2 ID:</label>
+                            <input class="form-control" type="number" ng-model="ctrl.teamToEdit.Player2Id" />
+                        </div>
+
+                        <div class="col-xs-12 form-group">
+                            <label>Bar ID:</label>
+                            <input class="form-control" type="number" ng-model="ctrl.teamToEdit.BarId" />
+                        </div>
+
+                        <div class="col-xs-12 form-group">
+                            <label>Season ambition</label>
+                            <input class="form-control" type="text" ng-model="ctrl.teamToEdit.SeasonAmbition" />
+                        </div>
+                        
+                        <div class="col-xs-12 form-group">
+                            <label>Wunschspieltag</label>
+                            <input class="form-control" type="text" ng-model="ctrl.teamToEdit.WishPlayDay" />
+                        </div>
+
+                        <div class="col-xs-12 form-group">
+                            <input type="checkbox" ng-model="ctrl.teamToEdit.IsForfaitOut">Forfait out
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.cancelEditTeam()">Schliessen</button>
+                    <button type="button" class="btn btn-primary" ng-click="ctrl.saveTeam()">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editMatchLeague" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Schliessen</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Spiel bearbeiten</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-xs-6 form-group">
+                            <label>{{ ctrl.editingMatch.HomeTeamName }}</label>
+                            <input class="form-control" type="number" min="0" max="10" ng-model="ctrl.editingMatch.HomeTeamScore" />
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <label>{{ ctrl.editingMatch.GuestTeamName }}</label>
+                            <input class="form-control" type="number" min="0" max="10" ng-model="ctrl.editingMatch.GuestTeamScore" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bar - Tisch</label>
+                        <select class="form-control" name="time" ng-model="ctrl.editingMatch.TableId" ng-options="table.Id as table.BarName + ' - ' + table.Name for table in ctrl.tables"></select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 form-group">
+                            <label>Datum</label>
+                            <p class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="ctrl.editingMatch.Date" is-open="ctrl.isDatePickerOpen" close-text="Close" alt-input-formats="altInputFormats" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="ctrl.openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <!-- TODO remove inline styles-->
+                            <label style="display: block">Zeit</label>
+                            <input type="text" style="width: 40px; display: inline;" placeholder="HH" ng-model="ctrl.editingMatch.Hour" />
+                            <input type="text" style="width: 40px; display: inline;" placeholder="MM" ng-model="ctrl.editingMatch.Minutes" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left" ng-click="ctrl.resetMatch()">Zurücksetzen</button>
+                    <button type="button" class="btn btn-default" ng-click="ctrl.cancelEditMatch()">Schliessen</button>
+                    <button type="button" class="btn btn-primary" ng-click="ctrl.saveMatch()">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

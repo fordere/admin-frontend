@@ -1,0 +1,13 @@
+﻿<section class="container" ng-controller="fordere.breadcrumbCtrl as ctrl">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="crumbs">
+        <span ng-repeat="breadcrumb in ctrl.breadcrumbs.get() track by breadcrumb.path">
+          <a ng-if="!$last" ng-href="{{ breadcrumb.path }}" ng-bind="breadcrumb.label"></a>
+          <i ng-if="!$last" class="fa fa-angle-double-right" style="margin-left: 4px; margin-right: 4px; margin-top: 0; margin-bottom: 0;" ></i>
+          <span ng-if="$last" ng-bind="breadcrumb.label"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

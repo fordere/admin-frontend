@@ -1,0 +1,112 @@
+<div ng-controller="fordere.registerCtrl as ctrl">
+    <div class="row">
+
+        <div class="col-md-12" ng-if="!ctrl.isAuthenticated()">
+            <div class="page-content page-shortcode">
+                <div class="box_icon">
+                    <div class="boxedtitle page-title">
+                        <h2>Anmelden</h2>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <p>
+                            Damit du an der Bar-foos-league teilnehmen kannst benötigst du einen fordere.ch-Account.
+                        </p>
+
+                        <p>
+                            <strong>Du hast schon einmal teilgenommen?</strong> <br />
+                            Dann hast du bereits einen Account. Du kannst dich oben über "Anmelden" in deinen Account einloggen.
+                        </p>
+
+                        <p>
+                            <strong>Du bist zum ersten Mal dabei?</strong> <br />
+                            Dann kannst du <a href="/register">HIER</a> einen Account erstellen.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="ctrl.isAuthenticated()">
+            <div class="col-md-4" ng-repeat="competition in ctrl.possibleCompetitions">
+                <div class="page-content page-shortcode">
+                    <div class="box_icon">
+                        <div class="boxedtitle page-title">
+                            <h2>{{competition.Name}}</h2>
+                        </div>
+
+                        <div ng-bind-html="ctrl.getCompetitionDescription(competition)"></div>
+
+                        <hr ng-if="$parent.ctrl.isAuthenticated()" />
+
+                        <div ng-switch="ctrl.getRegistrationState(competition.Id)" ng-if="$parent.ctrl.isAuthenticated()">
+                            <div ng-switch-when="unknown">Wird geladen...</div>
+                            <div ng-switch-when="open">
+                                <a href="/season/register/{{competition.Id}}" class="center-block btn btn-primary">Jetzt Anmelden</a>
+                            </div>
+                            <div ng-switch-when="ready">
+                                Du hast dich mit <strong>{{ctrl.getPartnerName(competition.Id)}}</strong> angemeldet. <br />
+                            </div>
+                            <div ng-switch-when="closed">
+                                Du hast dich nicht für die {{competition.Name}} angemeldet. Falls du doch noch mitmachen möchtest, melde dich über das <a href="/contact">Kontaktformular</a> bei uns. Vielleicht kriegen wir dich noch rein :-)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-if="ctrl.isAuthenticated()">
+            <div class="col-md-6 col-sm-12">
+                <div class="page-content page-shortcode">
+                    <div class="boxedtitle page-title">
+                        <h2>Infos</h2>
+                    </div>
+                    <p>
+                        <strong>Was? Wie funktioniert das überhaupt?</strong> <br />
+                        Du bist dir noch nicht sicher wie die Liga abläuft? <a href="/faq">Hier</a> werden die wichtigsten Fragen geklärt, ansonsten schreib uns einfach eine Mail (<a href="/contact">Kontakt</a>)
+                    </p>
+                    <p>
+                        <strong>Wichtige Termine</strong><br />
+                        Wann beginnt die Saison? Bis wann kann ich spielen? Und wann ist der Finaltag?
+                        <a href="/season/termine"><i class="fa fa-angle-double-right"></i> Hier findest du die Antwort</a>
+                    </p>
+
+                    <p>
+                        <strong>Fordere Account Registrierung</strong><br />
+                        Damit ihr als Team an der Saison teilnehmen könnt, benötigen beide Spieler/innen einen kostenlosen Account auf fordere.ch. Falls ihr noch nicht registriert seid, könnt ihr <a href="/register">hier</a> einen Account erstellen.
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <div class="page-content page-shortcode">
+                    <div class="box_icon">
+                        <div class="boxedtitle page-title">
+                            <h2>Mitgliederbeitrag</h2>
+                        </div>
+
+                        <p>
+                            <strong>Mitgliederbeitrag</strong><br />
+                            Pro Spieler wird ein Mitgliederbeitrag von 25.- fällig. <br />
+                            Du fragst dich wofür dieses Geld verwendet wird? <a href="/faq"><i class="fa fa-angle-double-right"></i> Klicke hier</a>
+                            <br />Du fragst dich wohin du das Geld überweisen sollst? <a href="/verein"><i class="fa fa-angle-double-right"></i> Klicke hier</a>
+                        </p>
+
+                        <p ng-if="!ctrl.hasOpenPayments && ctrl.hasRegisteredForAnyCompetition()" class="alert alert-success">Jeii, wir haben deinen Mitgliederbeitrag erhalten! Danke!</p>
+
+                        <p ng-if="ctrl.hasOpenPayments" class="alert alert-danger">
+                            Dein Mitgliederbeitrag scheint noch offen zu sein. Du kannst uns den Betrag auf unser Konto überweisen oder gleich direkt hier über die Webseite bezahlen. <br />
+                            <a href="/season/payment" ng-click="ctrl.gotoPayment()" class="btn btn-danger">Mitgliederbeitrag bezahlen</a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

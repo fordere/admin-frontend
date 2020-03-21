@@ -1,0 +1,491 @@
+h4 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.payment-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.payment-table tr {
+  height: 26px;
+}
+.payment-table td:last-child {
+  text-align: right;
+}
+.payment-table .row-payment-taxes {
+  color: #666;
+}
+.payment-table .row-total {
+  font-weight: bold;
+  border-top: 1px solid black;
+}
+.leaguenavigation {
+  list-style-type: none;
+  list-style-position: inside;
+  padding: 0;
+}
+.leaguenavigation li {
+  background-color: #EEEEEE;
+  margin-bottom: 2px;
+  line-height: 30px;
+  padding: 10px;
+  cursor: pointer;
+  cursor: hand;
+}
+.leaguenavigation li:hover {
+  background-color: #AAAAAA;
+}
+.leaguenavigation li.active {
+  background-color: #AAAAAA;
+}
+.main-content .page-content.breaking-news {
+  background-color: #3498DB;
+}
+.main-content .page-content.breaking-news .boxedtitle.page-title h2 {
+  color: white;
+}
+.main-content .page-content.breaking-news a {
+  color: white;
+}
+.page-content .alert {
+  display: block;
+}
+div.bar-box {
+  height: 230px;
+  margin-bottom: 20px;
+}
+div.vorstand-box {
+  height: 350px;
+  margin-bottom: 20px;
+}
+div.vorstand-box img {
+  display: block;
+  margin: auto;
+}
+h3.fordere-booked-game-title {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+.header-top-nav-list {
+  margin-bottom: 0;
+}
+ol.latin {
+  list-style: lower-latin;
+}
+img.vorstand {
+  border: 1px solid #dedede;
+}
+span.vorstand-name {
+  font-size: larger;
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  text-align: center;
+  padding-right: 30px;
+}
+.awaygame-icon {
+  color: lightgrey;
+}
+div.fordere-game-row {
+  margin: 0;
+  border-top: 1px solid lightgrey;
+  min-height: 30px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+div.fordere-game-row:hover {
+  background: #f5f5f5;
+}
+ul.newslist li {
+  margin-bottom: 20px;
+}
+.angular-google-map-container {
+  height: 400px;
+}
+.input-xs {
+  height: 22px;
+  padding: 5px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+p.happenedEvent {
+  color: gray;
+}
+td.winnercell {
+  font-weight: bold;
+}
+#cup-bracket {
+  overflow-x: scroll;
+  max-width: 100%;
+}
+#cup-bracket .label {
+  text-align: left;
+  line-height: 16px;
+  color: #000;
+  font-family: Arial;
+  font-size: 14px;
+}
+#cup-bracket .label a {
+  vertical-align: middle;
+  width: 70px;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #000;
+  font-weight: normal;
+}
+#cup-bracket .label a:hover {
+  text-decoration: none;
+}
+#cup-bracket .team {
+  height: 23px;
+}
+#cup-bracket div .score {
+  padding: 1px;
+}
+.myday {
+  background-color: #fcf8e3;
+  border: 1px solid #faebcc;
+  border-left: 0;
+  border-right: 0;
+  padding-left: 25px;
+}
+@media screen and (max-width: 1200px) {
+  #header {
+    padding-bottom: 15px;
+  }
+  #header .logo {
+    float: none;
+    margin: 0;
+    text-align: center;
+  }
+}
+div[text-angular-toolbar] {
+  margin-bottom: 8px;
+}
+.thread-post-userinfo {
+  width: 110px;
+  float: left;
+}
+.thread-post-userinfo p {
+  word-break: break-all;
+}
+.thread-post-textarea {
+  margin-left: 120px;
+  word-wrap: break-word;
+}
+.thread-post-textarea .postinfo {
+  color: #777;
+}
+.thread-post-userinfo-mobile {
+  display: block;
+}
+.thread-post-userinfo-mobile p {
+  margin: 0;
+}
+.thread-post-userinfo-mobile hr {
+  margin-top: 4px;
+}
+.thread-post-userinfo-mobile .postinfo {
+  color: #777;
+}
+@media screen and (max-width: 640px) {
+  .thread-post-textarea {
+    margin-left: 0;
+  }
+  .thread-post-textarea .postinfo {
+    display: none;
+  }
+  .thread-post-userinfo {
+    width: 0;
+    float: none;
+    display: none;
+  }
+}
+@media screen and (min-width: 640px) {
+  .thread-post-userinfo-mobile {
+    display: none;
+  }
+}
+.truncate {
+  display: inline-block;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/**
+ Weil ng-sortable alle elemente sonst auf display:block setzt ist das gefixte CSS hier und nicht direkt das CSS der Library eingebunden....
+*/
+.as-sortable-item,
+.as-sortable-placeholder {
+  display: table-row;
+}
+.as-sortable-item {
+  -ms-touch-action: none;
+  touch-action: none;
+  /* to disable context menu on iOS devices */
+  -webkit-touch-callout: none;
+}
+.as-sortable-item-handle {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+.as-sortable-drag {
+  position: absolute;
+  pointer-events: none;
+  z-index: 9999;
+}
+.as-sortable-hidden {
+  display: none !important;
+}
+.as-sortable-un-selectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/*
+ Fertig ng-sortable zeugs...
+*/
+.finalday-dashboard {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.finalday-dashboard .flex-item {
+  flex-grow: 1;
+}
+.finalday-dashboard th {
+  font-weight: bold;
+}
+.finalday-dashboard h1 {
+  font-size: 22px;
+}
+.finalday-dashboard table {
+  margin-bottom: 22px;
+  width: 100%;
+}
+.finalday-dashboard #right-panel {
+  width: 230px;
+  margin-left: 10px;
+}
+.finalday-dashboard .finalday-freetables {
+  font-size: 24px;
+  text-align: right;
+}
+.finalday-dashboard .progress-toggle {
+  color: black;
+  font-weight: bold;
+}
+select.mini {
+  padding: 0;
+  width: 60px;
+}
+.dashboard-progress {
+  text-align: center;
+}
+.dashboard-progress.onhold span,
+.dashboard-progress.onhold h3,
+.dashboard-progress.onhold p,
+.dashboard-progress.onhold table,
+.dashboard-progress.onhold canvas {
+  opacity: 0.5;
+}
+.dashboard-progress .competition-progress {
+  display: block;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+.dashboard-progress table {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+.dashboard-progress table th {
+  text-align: center;
+}
+.form-hint {
+  color: #999;
+  font-size: 12px;
+}
+table input[type="text"] {
+  margin: 0;
+  padding: 4px;
+}
+a[ng-click] {
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+legend {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 100%;
+}
+.pagination-container {
+  text-align: center;
+}
+.pagination {
+  float: none;
+}
+.freetables {
+  font-size: 24px;
+  font-weight: bold;
+}
+.fordere-toggle-title {
+  padding: 10px 15px;
+  background-color: #2f3239;
+  color: white;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 4px;
+}
+.fordere-toggle-title:hover,
+.fordere-toggle-title:focus {
+  color: white;
+}
+.fordere-toggle-title:after {
+  float: right;
+  font-family: "FontAwesome";
+  content: "\f067";
+}
+.fordere-toggle-content {
+  display: none;
+  padding: 10px 15px;
+}
+.fordere-toggle-content.active {
+  display: block;
+}
+.fordere-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f3f3f3;
+  z-index: 999;
+}
+.fordere-loader .fordere-loader-icon {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  color: #3498db;
+  font-size: 50px;
+}
+div[text-angular] div.form-control {
+  height: auto;
+}
+.fordere-barmap {
+  height: 450px;
+  display: block;
+}
+.fordere-inscription-discipline {
+  background-color: #EFEFEF;
+  padding: 20px;
+  margin: 10px 0;
+}
+.fordere-form-horizontal {
+  display: inline;
+}
+.fordere-form-horizontal input[type="text"] {
+  display: inline;
+}
+.fordere-disabled-player {
+  color: grey;
+}
+.fordere-division-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+.fordere-division-box {
+  margin-top: 60px;
+  padding-right: 20px;
+}
+.fordere-division-selection {
+  text-align: center;
+}
+.fordere-division-image {
+  width: 200px;
+  transition: width .5s, height .5s;
+}
+.fordere-division-image:hover {
+  width: 240px;
+  cursor: pointer;
+}
+.fordere-header-divider {
+  margin: 0px;
+}
+.fordere-header-division-list {
+  float: right;
+}
+@media screen and (max-width: 767px) {
+  .fordere-header-division-list {
+    float: none;
+  }
+}
+.fordere-selected-division a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.fordere-sg {
+  background-color: #009733 !important;
+}
+header.fordere-sg {
+  background-color: #303339 !important;
+}
+.fordere-winti {
+  background-color: #EF1313 !important;
+}
+header.fordere-winti {
+  background-color: #303339 !important;
+}
+.fordere-torunament-container {
+  background-color: lightblue;
+  border-radius: 10px;
+  padding: 25px;
+}
+.fordere-torunament-container h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 10px;
+}
+@media only screen and (max-width: 991px) {
+  .fordere-torunament-container {
+    margin-bottom: 20px !important;
+  }
+}
+.fordere-price-table th {
+  font-weight: bold;
+}
+.fordere-price-table td,
+.fordere-price-table th {
+  border: 1px solid black;
+  padding: 10px;
+}
+.fordere-sub-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 35px;
+}
+.fordere-reisli-container {
+  border: 4px solid #3498DB;
+}
+.modal-backdrop {
+  /* bug fix - no overlay */
+  display: none;
+}

@@ -1,0 +1,34 @@
+﻿<div class="row" ng-controller="fordere.threadListCtrl as ctrl">
+    <div class="col-lg-12">
+        <div class="page-content page-shortcode">
+            <div class="boxedtitle page-title">
+                <h2>Forum </h2>
+            </div>
+
+          <p>Willkommen im Forum von fordere.ch. Hast du Verbesserungsvorschläge? Irgendwelche Fragen zur Liga oder zur Webseite? Dann bist du hier genau richtig. Damit das Forum bestehen kann bitten wir euch die <a href="/forum/regeln">Forenregeln</a> zu respektieren.</p>
+
+            <button ng-click="ctrl.navigateToNewThread()" class="btn btn-default btn-sm">Neues Thema</button>
+
+            <div class="table-responsive table-hover">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Themenliste</th>
+                            <th>Posts</th>
+                            <th><span class="pull-right">Letzte Aktivit&auml;t</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="thread in ctrl.threads" ng-click="ctrl.navigateToDetail(thread.Id)" ng-cloak>
+                            <td class="col-md-8"><i class="fa fa-list"></i>&nbsp;&nbsp;<a href="javascript:void();" ng-click="ctrl.navigateToDetail(thread.Id)">{{thread.Subject}}</a></td>
+                            <td class="col-md-1">{{thread.NumberOfPosts}}</td>
+                            <td class="col-md-3">
+                                <span class="pull-right">{{thread.LastActivityUser}} | {{thread.LastActivityDate | date:'dd.MM.yyyy HH:mm'}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

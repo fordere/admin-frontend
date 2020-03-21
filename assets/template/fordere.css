@@ -1,0 +1,110 @@
+div.bar-box {
+    height: 230px;
+    margin-bottom: 20px;
+}
+
+div.vorstand-box {
+    height: 350px;
+    margin-bottom: 20px;
+}
+
+h3.fordere-booked-game-title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.header-top-nav-list {
+    margin-bottom: 0;
+}
+
+ol.latin {
+    list-style: lower-latin;
+}
+
+img.vorstand {
+    border: 1px solid #dedede;
+}
+
+span.vorstand-name {
+    font-size: larger;
+    position: absolute;
+    bottom: 12px;
+    width: 100%;
+    text-align: center;
+    padding-right: 30px;
+}
+
+
+.awaygame-icon {
+    color: lightgrey;
+}
+
+div.fordere-game-row {
+    margin: 0;
+    border-top: 1px solid lightgrey;
+    min-height: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+div.fordere-game-row:hover {
+    background: #f5f5f5;
+}
+
+ul.newslist li{
+    margin-bottom: 20px;
+}
+
+.angular-google-map-container { height: 400px; }
+
+.input-xs {
+    height: 22px;
+    padding: 5px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    }
+
+p.happenedEvent {
+    color: gray;
+}
+
+td.winnercell {
+    font-weight: bold;
+}
+
+#cup-bracket {
+    overflow-x: scroll;
+    max-width: 100%;
+}
+
+#cup-bracket .label {
+    text-align: left;
+    line-height: 16px;
+    color: #000;
+    font-family: Arial;
+    font-size: 14px;
+}
+
+#cup-bracket .label a {
+    vertical-align: middle;
+    width: 70px;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #000;
+    font-weight: normal;
+}
+
+#cup-bracket .team {
+    height: 23px;
+}
+
+#cup-bracket div.score {
+    padding: 1px;
+}
+#cup-bracket .label a:hover {
+    text-decoration: none;
+    
+}

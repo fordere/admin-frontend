@@ -1,0 +1,20 @@
+<div class="row" ng-controller="fordere.newsListCtrl as ctrl">
+  <div class="col-lg-12">
+    <div class="page-content page-shortcode">
+      <div class="boxedtitle page-title">
+        <h2>News</h2>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="newsItem in ctrl.news" ng-click="ctrl.navigateToDetail(newsItem.Id)" ng-cloak>
+              <td style="min-width: 140px; width: 140px">{{newsItem.PostDate | date:'dd.MM.yyyy HH:mm'}}</td>
+              <td>{{newsItem.Title}}</td>
+              <td><a href="/news/{{newsItem.Id}}" class="pull-right btn btn-info btn-xs">Mehr...</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

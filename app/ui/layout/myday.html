@@ -1,0 +1,26 @@
+﻿<section class="container" ng-controller="fordere.mydayCtrl as ctrl" ng-show="ctrl.matches.length > 0">
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Deine Spiele heute</h4>
+            <div ng-repeat="match in ctrl.matches">
+                <div ng-show="match.FinalDayCompetitionId && match.FinalDayTableNumber && !match.IsFreeTicket ">
+                    <small>
+                        Tisch <strong>#{{ match.FinalDayTableNumber }}</strong> vs. <a href="/teams/{{ctrl.getOpponentTeamId(match)}}">{{ ctrl.getOpponentTeamName(match) }}</a> <strong>{{ctrl.getResultType(match)}}, {{ctrl.myTeamScore(match)}}:{{ctrl.opponentTeamScore(match)}}</strong>
+                    </small><br />
+                </div>
+
+                <div ng-show="!match.FinalDayCompetitionId">
+
+                    <i class="fa fa-home" ng-class="{'awaygame-icon': !ctrl.isHomeMatch(match)}" title="{{ctrl.isHomeMatch(match) ? 'Heimspiel' : 'Auswärtsspiel'}}" data-toggle="tooltip" data-placement="left"></i>
+                    <small>
+                        {{ match.PlayDate | date: 'HH:mm' : 'UTC' }} {{ match.BarName }} vs
+                        <a href="/teams/{{ctrl.getOpponentTeamId(match)}}" ng-if="!match.IsFreeTicket">{{ ctrl.getOpponentTeamName(match) }}</a>
+                        <span ng-if="match.IsFreeTicket">{{match.GuestTeamName}}</span>
+                    </small><br />
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

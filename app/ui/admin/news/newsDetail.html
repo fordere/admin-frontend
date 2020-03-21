@@ -1,0 +1,35 @@
+﻿<div class="row" ng-controller="fordere.admin.newsDetailCtrl as ctrl">
+    <div class="col-lg-12">
+        <div class="page-content page-shortcode">
+            <div class="boxedtitle page-title">
+                <h2>{{ctrl.news.Title}}</h2>
+            </div>
+
+            <div class="form-group">
+                <label>Titel</label>
+                <input class="form-control" placeholder="Enter title" ng-model="ctrl.news.Title">
+            </div>
+
+            <div class="form-group">
+                <label for="division">Division</label>
+
+                <select name="division" class="form-control" ng-model="ctrl.news.DivisionId"
+                        ng-options="division.Id as division.Name for division in ctrl.divisions">
+                    <option value="">Alle</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Inhalt</label>
+                <div text-angular ng-model="ctrl.news.Content"></div>
+            </div>
+
+            <hr />
+
+            <div class="pull-right">
+                <a href="/admin/news"><button type="cancel" class="btn btn-danger"><span class="fa fa-undo"></span> Zurück</button></a>
+                <button type="submit" ng-click="ctrl.save()" class="btn btn-primary"><span class="fa fa-floppy-o"></span> Speichern</button>
+            </div>
+        </div>
+    </div>
+</div>

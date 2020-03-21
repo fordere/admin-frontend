@@ -1,0 +1,9 @@
+<div class="row fordere-division-selection" ng-controller="fordere.divisionSelectionCtrl as ctrl">
+    <h1>Wähle deine Fordere-Division</h1>
+
+    <div class="col-md-3 col-sm-12 fordere-division-box" ng-click="ctrl.select(division.Id)" ng-repeat="division in ctrl.divisions">
+        <p class="fordere-division-title">{{division.Name}}</p>
+        <img ng-src="/assets/images/divisions/{{division.Image}}.png" class="fordere-division-image" />
+    </div>
+
+</div>

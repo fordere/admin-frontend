@@ -1,0 +1,150 @@
+<div class="finalday-dashboard" ng-controller="fordere.admin.finalday.dashboard as ctrl">
+
+    <div class="flex-item page-content">
+
+        <div class="boxedtitle page-title">
+            <h2>
+                Turnier Dashboard
+
+                <button class="btn pull-right progress-toggle" ng-click="ctrl.isProgressVisible = !ctrl.isProgressVisible">
+                    <i class="fa"
+                       ng-class="{'fa-angle-double-right': ctrl.isProgressVisible, 'fa-angle-double-left': !ctrl.isProgressVisible}"></i>
+                </button>
+
+            </h2>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <a href="/admin/finalday/{{ctrl.finalDayId}}/finishedMatches" class="btn btn-primary">Beendete Spiele</a>
+            </div>
+            <div class="col-md-10 finalday-freetables">
+                Freie Ullrich Tische: <strong>{{ctrl.freeullrich}}</strong> / Freie Garlando Tische: <strong>{{ctrl.freegarlando}}</strong>
+            </div>
+        </div>
+
+        <h1>Laufende Spiele</h1>
+
+        <div ng-hide="ctrl.running.length > 0" class="alert alert-info">Keine laufenden Spiele</div>
+
+        <table class="running dashboard-table" ng-show="ctrl.running.length > 0">
+            <tr>
+                <th>T#</th>
+                <th style="text-align: right;">Team 1</th>
+                <th>&nbsp;&nbsp;vs</th>
+                <th>Team 2</th>
+                <th>Competition</th>
+                <th>Time</th>
+                <th></th>
+            </tr>
+
+            <tr ng-repeat="match in ctrl.running">
+                <td>{{ctrl.getTableNumber(match.FinalDayTableId)}}</td>
+                <td style="text-align: right;"><a href="/teams/{{match.HomeTeamId}}">{{match.HomeTeamName}}</a></td>
+                <td>&nbsp;&nbsp;<strong>vs</strong>&nbsp;&nbsp;</td>
+                <td><a href="/teams/{{match.GuestTeamId}}">{{match.GuestTeamName}}</a></td>
+                <td>{{match.FinalDayCompetitionName}}</td>
+                <td><span><timer date="match.RegisterDate" /></span>&nbsp; <span ng-show="match.RegisterDate != match.PlayDate">( <timer date="match.PlayDate"></timer> )</span></td>
+                <td>
+                    <a class="pull-right btn btn-danger btn-xs" style="margin-left: 4px;" ng-click="ctrl.cancel(match)"><i class="fa fa-times" title="Match zurückstellen" data-toggle="tooltip" data-placement="top"></i></a>
+                    <a class="pull-right btn btn-warning btn-xs" style="margin-left: 4px;" ng-click="ctrl.recall(match)">recall</a>
+                    <a class="pull-right btn btn-success btn-xs" ng-click="ctrl.result(match)">result</a>
+                </td>
+            </tr>
+        </table>
+
+        <h1>M&ouml;gliche Spiele</h1>
+        <div ng-hide="ctrl.upcomming.Matches.length  > 0" class="alert alert-info">Keine Spiele bereit zum Aufruf!</div>
+
+        <table ng-show="ctrl.upcomming.Matches.length > 0">
+            <tr>
+                <th>Turnier</th>
+                <th style="text-align: right;">Team 1</th>
+                <th>&nbsp;&nbsp;vs</th>
+                <th>Team 2</th>
+                <th style="text-align: right">Play</th>
+            </tr>
+            <tr ng-repeat="match in ctrl.getUpcommingMatches()">
+                <td>{{match.FinalDayCompetitionName}}</td>
+                <td style="text-align: right;"><a href="/teams/{{match.HomeTeamId}}">{{match.HomeTeamName}}</a></td>
+                <td>&nbsp;&nbsp;<strong>vs</strong>&nbsp;&nbsp;</td>
+                <td><a href="/teams/{{match.GuestTeamId}}">{{match.GuestTeamName}}</a></td>
+                <td>
+                    <a class="pull-right btn btn-success btn-xs" style="margin-left: 4px;" ng-click="ctrl.play(match)" ng-disabled="ctrl.getTables(match.FinalDayTableType).length < 1">Go</a>
+                    <a class="pull-right btn btn-default btn-xs" ng-click="ctrl.selectTableToPlay(match)" ng-disabled="ctrl.getTables(match.FinalDayTableType).length < 1">Auf Tisch</a>
+                </td>
+            </tr>
+        </table>
+        
+        <button ng-if="ctrl.upcomming.Matches.length > 20 && ctrl.showAll === false" ng-click="ctrl.toggleShowAll()" class="btn btn-default">Alle Matches anzeigen (Total {{ctrl.upcomming.Matches.length}})</button>
+        <button ng-if="ctrl.showAll === true" ng-click="ctrl.toggleShowAll()" class="btn btn-default">Nur 20 Matches anzeigen...</button>
+
+    </div>
+
+    <div id="right-panel" ng-if="ctrl.isProgressVisible">
+        <div ng-include="'app/ui/admin/season/finalday/dashboardProgress.html'"></div>
+    </div>
+
+    <div class="modal fade" id="enterResult" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Schliessen</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Resultat eintragen</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label class="control-label" for="location">{{ctrl.editingMatch.HomeTeamName}} <span ng-show="ctrl.editingMatch.HomeTeam">({{ctrl.editingMatch.HomeTeam.Player1.FirstName}} {{ctrl.editingMatch.HomeTeam.Player1.LastName}}, {{ctrl.editingMatch.HomeTeam.Player2.FirstName}} {{ctrl.editingMatch.HomeTeam.Player2.LastName}})</span></label>
+                        <input class="form-control" tabindex="1" type="number" name="homeTeamScore" ng-model="ctrl.editingMatch.HomeTeamScore" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="location">{{ctrl.editingMatch.GuestTeamName}} <span ng-show="ctrl.editingMatch.HomeTeam">({{ctrl.editingMatch.GuestTeam.Player1.FirstName}} {{ctrl.editingMatch.GuestTeam.Player1.LastName}}, {{ctrl.editingMatch.GuestTeam.Player2.FirstName}} {{ctrl.editingMatch.GuestTeam.Player2.LastName}})</span></label>
+                        <input class="form-control" tabindex="2" type="number" name="homeTeamScore" ng-model="ctrl.editingMatch.GuestTeamScore" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" tabindex="4" data-dismiss="modal">Schliessen</button>
+                    <button type="button" class="btn btn-primary" tabindex="3" ng-disabled="formCtrl.$invalid" ng-click="ctrl.sendResult(ctrl.editingMatch)">Eintragen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="selectTable" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Schliessen</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Spiel auf Tisch ausrufen</h4>
+                </div>
+                <div class="modal-body">
+
+                    <p style="text-align: center;">
+                        <strong>{{ctrl.editingMatch.HomeTeamName}}</strong><br />
+                        vs. <br />
+                        <strong>{{ctrl.editingMatch.GuestTeamName}}</strong>
+                    </p>
+
+
+                    <div class="form-group">
+                        <label class="control-label" for="location">Tisch</label>
+                        <select name="selectedTable" ng-model="ctrl.editingMatch.selectedTable" ng-options="item as ('Tisch ' + item.Number) for item in ctrl.getTables(ctrl.editingMatch.FinalDayTableType) track by item.Id">
+                            <option style="display:none" value=""></option>
+                        </select>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+                    <button type="button" class="btn btn-primary" ng-disabled="formCtrl.$invalid" ng-click="ctrl.playOnTable(ctrl.editingMatch)">Spiel ausrufen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

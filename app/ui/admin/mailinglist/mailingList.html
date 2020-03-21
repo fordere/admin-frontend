@@ -1,0 +1,70 @@
+﻿<div ng-controller="fordere.admin.mailingListCtrl as ctrl">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="page-content">
+        <div class="boxedtitle page-title">
+          <h2>Division</h2>
+        </div>
+        <textarea class="form-control" rows="20">{{ctrl.allMails.UserMails}}</textarea>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="page-content">
+        <div class="boxedtitle page-title">
+          <h2>By Season</h2>
+        </div>
+
+        <form role="form" name="form" novalidate>
+          <div class="form-group">
+            <label for="season">Season:</label>
+            <select required name="season" ng-options="season.Id as season.Name for season in ctrl.seasons" ng-model="ctrl.selectedSeason"></select>
+          </div>
+
+          <textarea class="form-control" rows="20" ng-show="ctrl.seasonMails">{{ctrl.seasonMails.UserMails}}</textarea>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-3" ng-show="ctrl.selectedSeason">
+      <div class="page-content">
+        <div class="boxedtitle page-title">
+          <h2>By Competition</h2>
+        </div>
+
+        <form role="form" name="form" novalidate>
+          <div class="form-group">
+            <label for="competition">Competition:</label>
+            <select required name="competition" ng-options="competition.Id as competition.Name for competition in ctrl.competitions" ng-model="ctrl.selectedCompetition"></select>
+          </div>
+
+          <textarea class="form-control" rows="20" ng-show="ctrl.competitionMails">{{ctrl.competitionMails.UserMails}}</textarea>
+
+        </form>
+
+      </div>
+    </div>
+
+    <div class="col-sm-3" ng-show="ctrl.selectedCompetition">
+      <div class="page-content">
+        <div class="boxedtitle page-title">
+          <h2>By League</h2>
+        </div>
+        
+        <form role="form" name="form" novalidate>
+          <div class="form-group">
+            <label for="league">League:</label>
+            <select required name="league" ng-options="league.Id as ctrl.getLeagueName(league) for league in ctrl.leagues" ng-model="ctrl.selectedLeague"></select>
+          </div>
+
+          <textarea class="form-control" rows="20" ng-show="ctrl.leagueMails">{{ctrl.leagueMails.UserMails}}</textarea>
+
+        </form>
+
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

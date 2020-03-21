@@ -1,0 +1,17 @@
+﻿<div class="row" ng-controller="fordere.leagueNavigationCtrl as ctrl">
+    <div class="col-md-12">
+        <div class="tabs-warp question-tab">
+            <ul class="tabs list-unstyled">
+                <li class="tab">
+                    <a href="/leagues/{{ctrl.competitionId}}/standings" ng-class="{current : ctrl.activetab == 'standings'}">Tabellen</a>
+                </li>
+                <li class="tab">
+                    <a href="/leagues/{{ctrl.competitionId}}/teams" ng-class="{current : ctrl.activetab == 'teams'}">Teams</a>
+                </li>
+                <li class="tab" ng-show="ctrl.season.State === 'PrepareFinalDay' || ctrl.season.State === 'FinalDay' || ctrl.season.State === 'Archived'">
+                    <a href="/leagues/{{ctrl.competitionId}}/finalqualification" ng-class="{current : ctrl.activetab == 'finalqualification'}">Qualifikation Finaltag</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

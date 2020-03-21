@@ -1,0 +1,10 @@
+{
+  "local": {
+    "EnvironmentConfig": {
+    }
+  },
+  "production": {
+    "EnvironmentConfig": {
+    }
+  }
+}

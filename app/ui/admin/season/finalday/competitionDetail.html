@@ -1,0 +1,262 @@
+﻿<div class="row" ng-controller="fordere.admin.finalDay.competitionDetailCtrl as ctrl">
+
+    <div class="col-lg-12">
+
+        <div class="page-content">
+            <div class="boxedtitle page-title">
+                <h2>{{ctrl.tournament.Name}} Details</h2>
+            </div>
+
+            <strong>Modus:</strong> {{ctrl.getCompetitionMode()}}<br />
+            <strong>Tisch-Type:</strong> {{ctrl.getTableType()}}<br />
+            <!-- TODO SSH show priority here-->
+
+        </div>
+        <div class="row" ng-if="ctrl.isSinglePlayerCompetitionMode()">
+            <div class="col-lg-3">
+
+                <div class="page-content">
+                    <div class="boxedtitle page-title">
+                        <h2>Fordere Spieler</h2>
+                    </div>
+
+                    <p>
+                        <label>Name</label>
+                        <input class="form-control" type="text" ng-model="ctrl.playerToAdd"
+                               typeahead-input-formatter="$model.FirstName + ' ' + $model.LastName"
+                               typeahead-editable="false"
+                               uib-typeahead="player as player.Name for player in ctrl.getFilteredFordereUsers() | filter:$viewValue | limitTo:8">
+                    </p>
+
+                    <button class="btn btn-primary pull-right" ng-click="ctrl.overTakeForderePlayer()" ng-disabled="!ctrl.playerToAdd">Hinzufügen</button>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-9">
+
+                <div class="page-content">
+                    <div class="boxedtitle page-title">
+                        <h2>Neuen Spieler</h2>
+                    </div>
+
+                    <!-- TODO SSH Remove inline styles-->
+                    <p class="col-lg-3" style="margin-bottom: 0">
+                        <label>Vorname</label>
+                        <input type="text" class="form-control" ng-model="ctrl.newPlayer.FirstName" />
+                    </p>
+
+                    <p class="col-lg-3" style="margin-bottom: 0">
+                        <label>Nachname</label>
+                        <input type="text" class="form-control" ng-model="ctrl.newPlayer.LastName" />
+                    </p>
+
+                    <p class="col-lg-3" style="margin-bottom: 0">
+                        <label>E-Mail</label>
+                        <input type="text" class="form-control" ng-model="ctrl.newPlayer.Email" />
+                    </p>
+
+                    <p class="col-lg-3" style="margin-bottom: 0">
+                        <label>Mobile</label>
+                        <input type="text" class="form-control" ng-model="ctrl.newPlayer.PhoneNumber" />
+                    </p>
+
+                    <button class="btn btn-primary pull-right" ng-click="ctrl.addNewPlayer()" ng-disabled="!ctrl.newPlayer.Email || !ctrl.newPlayer.LastName || !ctrl.newPlayer.FirstName">Hinzufügen</button>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Gruppen - Turnier -->
+        <div class="page-content" ng-if="ctrl.isGroupCompetitionMode()">
+            <div class="boxedtitle page-title">
+                <h2>Gruppen</h2>
+            </div>
+
+            <table class="table table-condensed table-responsive" ng-show="ctrl.groups.length > 0">
+                <thead>
+                    <tr>
+                        <th>Nummer</th>
+                        <th>Anzahl Teams die sich für die nächste Runde qualifizieren</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="group in ctrl.groups">
+                        <td><input type="text" style="margin-bottom: 0" ng-blur="ctrl.saveGroup(group)" ng-model="group.Number" /></td>
+                        <td><input type="text" style="margin-bottom: 0" ng-blur="ctrl.saveGroup(group)" ng-model="group.NumberOfSuccessor" /></td>
+                        <td><button class="btn btn-default btn-xs pull-right" ng-disabled="!ctrl.isEditable()" ng-click="ctrl.deleteGroup(group.Id)"><i class="fa fa-times" title="Gruppe löschen" data-toggle="tooltip" data-placement="top"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <span class="alert alert-info" style="display: block" ng-show="ctrl.groups.length == 0">Noch keine Gruppen erfasst</span>
+
+            <button class="btn btn-default btn-primary pull-right" ng-disabled="!ctrl.isEditable()" ng-click="ctrl.addGroup()">Gruppe hinzufügen</button>
+
+        </div>
+
+        <!-- Add Teams for Group and KO Modes -->
+        <div class="row" ng-if="!ctrl.isSinglePlayerCompetitionMode()">
+
+            <div class="col-lg-4">
+
+                <div class="page-content">
+                    <div class="boxedtitle page-title">
+                        <h2>Teams aus Saison...</h2>
+                    </div>
+
+                    <p>
+                        <select class="form-control required-item" name="teamsFromLeague" ng-model="ctrl.overTakeSettingsLeague.LeagueId" ng-options="league.Id as (league.Competition.Name +' - ' + league.Number + '. Liga') for league in ctrl.leagues" required></select>
+                    </p>
+
+                    <button class="btn btn-primary pull-right" ng-click="ctrl.overTakeTeamsLeague()" ng-disabled="!ctrl.isEditable()">Hinzufügen</button>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="page-content">
+                    <div class="boxedtitle page-title">
+                        <h2>Sieger aus anderem Turnier...</h2>
+                    </div>
+
+                    <p>
+                        <select ng-show="ctrl.finishedTournaments.length > 0" class="form-control required-item" name="teamsFromTournament" ng-model="ctrl.overTakeSettingsFinished.FinalDayCompetitionId" ng-options="tournament.Id as tournament.Name for tournament in ctrl.finishedTournaments" required></select>
+                        <span ng-hide="ctrl.finishedTournaments.length > 0">Noch kein Turnier abgeschlossen!</span>
+                    </p>
+
+                    <button class="btn btn-primary pull-right" ng-click="ctrl.overTakeTeamsFinished()" ng-disabled="!ctrl.isEditable()" ng-show="ctrl.finishedTournaments.length > 0">Hinzufügen</button>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="page-content">
+                    <div class="boxedtitle page-title">
+                        <h2>Spezifisches Team...</h2>
+                    </div>
+
+                    <p>
+                        <select class="form-control required-item" name="specificTeam" ng-model="ctrl.overTakeSettingsSpecific.TeamId" ng-options="team.Id as (team.Name + ' (' + team.CompetitionName + ')') for team in ctrl.teams" required></select>
+                    </p>
+                    <p ng-show="ctrl.isGroupCompetitionMode()">
+                        <label>... in Gruppe</label>
+                        <select ng-show="ctrl.groups.length > 0" class="form-control required-item" name="specificTeamGroup" ng-model="ctrl.overTakeSettingsSpecific.GroupId" ng-options="group.Id as 'Gruppe ' + group.Number for group in ctrl.groups" required></select>
+                        <span ng-show="ctrl.groups.length == 0">Noch keine Gruppen erfasst!</span>
+                    </p>
+
+                    <button class="btn btn-primary pull-right" ng-click="ctrl.overTakeTeamsSpecific()" ng-disabled="!ctrl.isEditable()">Hinzufügen</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Single Player Modes -->
+        <div class="page-content" ng-if="ctrl.isSinglePlayerCompetitionMode()">
+            <div class="boxedtitle page-title">
+                <h2>Spieler</h2>
+            </div>
+
+            <table class="table table-hover table-condensed" ng-show="ctrl.players.length > 0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="col-md-4">Vorname</th>
+                        <th class="col-md-3">Nachname</th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="player in ctrl.players" style="display: table-row" ng-class="{'fordere-disabled-player': !player.IsActive}">
+                        <td> {{$index + 1}}</td>
+                        <td> {{player.Player.FirstName}}</td>
+                        <td> {{player.Player.LastName}}</td>
+                        <td>
+                            <button class="btn btn-default btn-xs pull-right" ng-if="ctrl.tournament.State !== 'Ready' && player.IsActive" ng-click="ctrl.togglePlayerActive(player)">Deaktivieren</button>
+                            <button class="btn btn-default btn-xs pull-right" ng-if="ctrl.tournament.State !== 'Ready' && !player.IsActive" ng-click="ctrl.togglePlayerActive(player)">Aktivieren</button>
+                            <button class="btn btn-default btn-xs pull-right" ng-if="ctrl.tournament.State === 'Ready'" ng-click="ctrl.deletePlayer(player)"><i class="fa fa-times" title="Spieler löschen" data-toggle="tooltip" data-placement="top"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <span ng-show="ctrl.players.length == 0" class="alert alert-info">Noch keine Spieler erfasst</span>
+
+        </div>
+
+        <div class="page-content" ng-if="!ctrl.isSinglePlayerCompetitionMode()">
+            <div class="boxedtitle page-title">
+                <h2>Teams</h2>
+            </div>
+
+            <div ng-repeat="group in ctrl.groups">
+                <h5 ng-if="ctrl.isGroupCompetitionMode()">Gruppe {{group.Number}}</h5>
+
+                <span ng-show="group.Teams.length == 0">Keine Teams zugewiesen.</span>
+
+                <table class="table table-hover table-condensed" ng-show="group.Teams.length > 0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="col-md-1" ng-show="ctrl.isEditable()">#</th>
+                            <th class="col-md-4">Team</th>
+                            <th class="col-md-3">Spieler 1</th>
+                            <th class="col-md-3">Spieler 2</th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody data-as-sortable="ctrl.settlementSortListener" data-ng-model="group.Teams">
+                        <tr data-ng-repeat="teamInGroup in group.Teams" data-as-sortable-item style="display: table-row">
+                            <td data-as-sortable-item-handle ng-show="ctrl.isEditable()"><i class="fa fa-bars"></i></td>
+                            <td> {{teamInGroup.Settlement}}</td>
+                            <td ng-show="teamInGroup.TeamName">{{teamInGroup.TeamName}}</td>
+                            <td ng-show="teamInGroup.TeamName">{{teamInGroup.Player1FirstName}} {{teamInGroup.Player1LastName}}</td>
+                            <td ng-show="teamInGroup.TeamName">{{teamInGroup.Player2FirstName}} {{teamInGroup.Player2LastName}}</td>
+                            <td ng-hide="teamInGroup.TeamName" colspan="3"><span class="badge badge-info">Freilos</span></td>
+                            <td><button class="btn btn-default btn-xs pull-right" ng-disabled="!ctrl.isEditable()" ng-click="ctrl.deleteTeam(group.Id, teamInGroup.Id)"><i class="fa fa-times" title="Resultat löschen" data-toggle="tooltip" data-placement="top"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <span ng-show="ctrl.groups.length == 0" class="alert alert-info">Noch keine Gruppen erfasst</span>
+
+        </div>
+        <div class="page-content">
+            <button class="btn btn-success pull-right" ng-show="ctrl.tournament.State === 'Ready'" ng-click="ctrl.startTournament()">Turnier starten</button>
+            <button class="btn btn-primary pull-right" ng-show="ctrl.tournament.State === 'Running'" ng-click="ctrl.holdTournament()">Turnier anhalten</button>
+            <button class="btn btn-danger" ng-show="ctrl.tournament.State === 'Running' || ctrl.tournament.State === 'OnHold' || ctrl.tournament.State === 'Finished'" ng-click="ctrl.showStopTournamentWarning()">Turnier annulieren</button>
+            <button class="btn btn-success pull-right" ng-show="ctrl.tournament.State === 'OnHold'" ng-click="ctrl.resumeTournament()">Turnier weiterführen</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="stopTournamentWarning" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Schliessen</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Turnier annulieren</h4>
+                </div>
+                <div class="modal-body">
+                    Sämtliche bereits gespielte werden gelöscht und das Turnier auf den initialen Zustand zurückgesetzt. Bist du sicher, dass du das machen willst?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-danger" ng-click="ctrl.stopTournament()">Turnier stoppen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

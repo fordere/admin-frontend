@@ -1,0 +1,93 @@
+﻿<div class="row" ng-controller="profileCtrl as ctrl">
+    <div class="col-md-9">
+        <div class="page-content">
+            <div class="boxedtitle page-title"><h2>Dein Profil</h2></div>
+
+            <div class="form-style form-style-4">
+                <form name="profileForm">
+                    <div class="form-inputs clearfix">
+                        <div class="alert alert-success" ng-show="ctrl.saveSuccess">
+                            Profil gespeichert!
+                        </div>
+                        <div class="alert alert-danger" ng-show="ctrl.saveFailed">
+                            Speichern fehlgeschlagen! Überprüfe deine Eingabe!
+                        </div>
+                        <p>
+                            <label class="required">Vorname<span>*</span></label>
+                            <input type="text" ng-model="ctrl.profile.FirstName" required />
+                        </p>
+                        <p>
+                            <label class="required">Nachname<span>*</span></label>
+                            <input type="text" ng-model="ctrl.profile.LastName">
+                        </p>
+                        <p>
+                            <label class="required">E-Mail<span>*</span></label>
+                            <input type="email" ng-model="ctrl.profile.Email" required>
+                        </p>
+                        <p>
+                            <label class="required">Telefon<span>*</span></label>
+                            <input type="text" ng-model="ctrl.profile.PhoneNumber">
+                        </p>
+
+                        <p>
+                            <label class="required">Passwort <small>(wenn Änderung gewünscht)</small><span>*</span></label>
+                            <input type="password" ng-model="ctrl.profile.Password">
+                        </p>
+                        <p>
+                            <label class="required">Passwort bestätigen<span>*</span></label>
+                            <input type="password" ng-model="ctrl.password2">
+                        </p>
+                        <p class="alert alert-danger" style="width: 100%;" ng-show="!ctrl.arePasswordsEqual">
+                            Passwörter sind nicht identisch!
+                        </p>
+
+                        <p>
+                            <label>Newsletter Division Zürich</label>
+                            <input type="checkbox" ng-model="ctrl.profile.DivisionZuerich">Newsletter Fordere Zürich
+                        </p>
+
+                        <p>
+                            <label>Newsletter Division St. Gallen</label>
+                            <input type="checkbox" ng-model="ctrl.profile.DivisionStGallen">Newsletter Fordere St. Gallen
+                        </p>
+
+                        <p>
+                            <label>Newsletter Division Luzern</label>
+                            <input type="checkbox" ng-model="ctrl.profile.DivisionLuzern">Newsletter Fordere Luzern
+                        </p>
+
+                        <p>
+                            <label>Newsletter Division Winti</label>
+                            <input type="checkbox" ng-model="ctrl.profile.DivisionWinti">Newsletter Fordere Winti
+                        </p>
+                        <p>
+                            <label>Kalender</label>
+                            <a href="http://zh.fordere.ch/{{ctrl.profile.CalendarLink}}" target="_blank">Link zum ICS</a><br />
+                            <a href="https://calendar.google.com/calendar/r?cid=webcal://zh.fordere.ch{{ctrl.profile.CalendarLink}}" target="_blank">Zum Google Kalender hinzufügen</a>
+                        </p>
+                    </div>
+                    <p class="form-submit">
+                        <input type="submit" ng-disabled="profileForm.$invalid || !ctrl.arePasswordsEqual || !ctrl.areBothOrNonePasswordDefined()" type="submit" value="speichern" ng-click="ctrl.saveProfile()" class="btn btn-primary">
+                    </p>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <aside class="col-md-3 sidebar">
+        <div class="widget widget_stats">
+            <h3 class="widget_title">Statistik</h3>
+
+            <p>
+                <b>
+                    Mitglied seit:
+                </b><br />
+                {{ctrl.profile.CreatedDate | date:'dd.MM.yyyy'}}
+
+            </p>
+
+        </div>
+
+    </aside>
+</div>
