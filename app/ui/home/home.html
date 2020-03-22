@@ -8,8 +8,18 @@
         </div>
         <div class="col-md-4 col-sm-12"><a class="admin-dashboard-item" href="/admin/seasons">Spielbetrieb</a></div>
     </div>
-    <div ng-if="!ctrl.isAuthenticated">
-        Login here
+    <div ng-if="!ctrl.isAuthenticated" style="display: flex; justify-content: center; padding: 10px">
+        <div class="alert alert-info">
+            <h3 style="font-weight: bold">Anmeldung</h3>
+            <form name="loginForm">
+                <input type="text" id="login-username" placeholder="E-Mail" ng-model="loginUser.username"
+                       required/>
+                <input type="password" placeholder="Passwort" ng-model="loginUser.password" required/>
+
+                <input type="submit" ng-click="ctrl.login()" ng-disabled="loginForm.$invalid" value="Login"
+                       class="button color small ">
+            </form>
+        </div>
     </div>
 
     <div ng-if="ctrl.isAuthenticated && !ctrl.isAdmin">
