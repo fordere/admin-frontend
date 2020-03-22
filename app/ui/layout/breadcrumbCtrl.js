@@ -4,10 +4,12 @@
   var controllerId = 'fordere.breadcrumbCtrl';
 
   angular.module('fordere')
-    .controller(controllerId, ['breadcrumbs', breadcrumbCtrl]);
+    .controller(controllerId, ['breadcrumbs', 'AuthService', breadcrumbCtrl]);
 
-  function breadcrumbCtrl(breadcrumbs) {
+  function breadcrumbCtrl(breadcrumbs, authService) {
     var vm = this;
     vm.breadcrumbs = breadcrumbs;
+    vm.isAdmin = authService.isAdmin();
+    vm.isAuthenticated = authService.isAuthenticated();
   }
 })();

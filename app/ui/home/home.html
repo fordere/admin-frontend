@@ -1,6 +1,6 @@
 <div class="row" ng-controller="fordere.homeCtrl as ctrl">
 
-    <div ng-if="ctrl.isAuthenticated">
+    <div ng-if="ctrl.isAuthenticated && ctrl.isAdmin">
         <div class="col-md-4 col-sm-12"><a class="admin-dashboard-item" href="/admin/news">News</a></div>
         <div class="col-md-4 col-sm-12"><a class="admin-dashboard-item" href="/admin/users">Benutzer</a></div>
         <div class="col-md-4 col-sm-12"><a class="admin-dashboard-item" href="/admin/bars">Bars</a></div>
@@ -10,5 +10,11 @@
     </div>
     <div ng-if="!ctrl.isAuthenticated">
         Login here
+    </div>
+
+    <div ng-if="ctrl.isAuthenticated && !ctrl.isAdmin">
+        <p class="alert alert-danger" style="text-align: center; font-weight: bold">
+            Sorry aber du bist kein Fordere-Admin!
+        </p>
     </div>
 </div>

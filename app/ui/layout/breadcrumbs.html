@@ -1,5 +1,5 @@
 ﻿<section class="container" ng-controller="fordere.breadcrumbCtrl as ctrl">
-  <div class="row">
+  <div class="row" ng-if="ctrl.isAuthenticated && ctrl.isAdmin">
     <div class="col-md-11">
       <div class="crumbs">
         <span ng-repeat="breadcrumb in ctrl.breadcrumbs.get() track by breadcrumb.path">

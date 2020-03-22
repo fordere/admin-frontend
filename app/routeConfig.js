@@ -4,11 +4,11 @@
         $locationProvider.html5Mode(true);
         $routeProvider
             .when('/', {
-                templateUrl: 'app/ui/index/index.html',
+                templateUrl: 'app/ui/home/home.html',
                 label: 'Admin Panel'
             })
             .when('/login', {
-                templateUrl: 'app/ui/index/index.html',
+                templateUrl: 'app/ui/home/home.html',
                 label: 'Login'
             })
             .when('/admin/seasons', {

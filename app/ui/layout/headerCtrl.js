@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'fordere.menuCtrl';
+    var controllerId = 'fordere.headerCtrl';
 
     angular.module('fordere')
         .controller(controllerId, ['AuthService', 'seasonService', '$window', 'divisionHolder', 'competitionService', menuCtrl]);
