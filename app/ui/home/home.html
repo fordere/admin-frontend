@@ -12,9 +12,9 @@
         <div class="alert alert-info">
             <h3 style="font-weight: bold">Anmeldung</h3>
             <form name="loginForm">
-                <input type="text" id="login-username" placeholder="E-Mail" ng-model="loginUser.username"
+                <input type="text" id="login-username" placeholder="E-Mail" ng-model="ctrl.loginUser.username"
                        required/>
-                <input type="password" placeholder="Passwort" ng-model="loginUser.password" required/>
+                <input type="password" placeholder="Passwort" ng-model="ctrl.loginUser.password" required/>
 
                 <input type="submit" ng-click="ctrl.login()" ng-disabled="loginForm.$invalid" value="Login"
                        class="button color small ">
