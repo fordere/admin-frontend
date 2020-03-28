@@ -9,3 +9,5 @@ Install all dependencies:
 
 Run the app:
 ```gulp```
+
+This should start the development webserver on "http://localhost:8000/". 
