@@ -23,7 +23,7 @@
             }
 
             this.isAdmin = function () {
-                return authenticatedUser != undefined && authenticatedUser.IsAdmin;
+                return authenticatedUser != undefined && authenticatedUser.isAdmin;
             }
 
             var vm = this;
@@ -37,8 +37,7 @@
             this.authenticate = function (loginUser) {
                 $http({ method: 'POST', url: API_URL + 'auth/credentials', data: { UserName: loginUser.username, Password: loginUser.password, RememberMe: loginUser.rememberMe } })
                     .then(function (data, status, headers, config) {
-                      $window.localStorage.setItem('token', data.BearerToken);
-                      $window.location.reload();
+                      $window.localStorage.setItem('token', data.data.bearerToken);
                       vm.reload();
                     })
                     .catch(function (data, status, headers, config) {

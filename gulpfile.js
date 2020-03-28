@@ -181,6 +181,8 @@ gulp.task('less', function () {
         .pipe(gulp.dest('./css/02_compiled'));
 });
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 gulp.task('webserver', function () {
     gulp.src('./')
         .pipe(webserver({
@@ -192,7 +194,7 @@ gulp.task('webserver', function () {
             proxies: [
                 {
                     source: '/api',
-                    target: 'http://localhost:5001/'
+                    target: 'https://localhost:5001/'
                 }
             ]
         }));

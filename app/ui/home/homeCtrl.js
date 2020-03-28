@@ -1,8 +1,8 @@
 ﻿(function () {
     var controllerId = 'fordere.homeCtrl';
-    angular.module('fordere').controller(controllerId, ['divisionHolder', 'AuthService', homeCtrl]);
+    angular.module('fordere').controller(controllerId, ['divisionHolder', 'AuthService', '$rootScope', homeCtrl]);
 
-    function homeCtrl(divisionHolder, authService) {
+    function homeCtrl(divisionHolder, authService, $scope) {
         'use strict';
         var vm = this;
 
@@ -11,6 +11,11 @@
         vm.isAdmin = authService.isAdmin();
         vm.login = login;
         vm.loginUser = {};
+
+        $scope.$on('event:authenticated', function () {
+            vm.isAuthenticated = authService.isAuthenticated();
+            vm.isAdmin = authService.isAdmin();
+        });
 
         function init() {
         }
