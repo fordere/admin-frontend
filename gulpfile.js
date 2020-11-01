@@ -194,7 +194,7 @@ gulp.task('webserver', function () {
             proxies: [
                 {
                     source: '/api',
-                    target: 'https://localhost:5001/'
+                    target: 'http://localhost:1337/'
                 }
             ]
         }));

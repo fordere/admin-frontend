@@ -18,40 +18,6 @@
     </p>
 
     <div class="row" ng-show="ctrl.isCompetitionReady && ctrl.isCompetitionCreated">
-
-        <div class="col-lg-9">
-            <div class="page-content">
-                <div class="boxedtitle page-title"><h2>Spiele</h2></div>
-
-                <label>Team</label><br />
-                <input type="text" class="form-control" ng-model="ctrl.teamFilter"/>
-
-                <br />
-                <br />
-
-                <table class="table table-responsive table-hover table-condensed table-striped">
-                    <thead>
-                        <tr>
-                            <th>Heimteam</th>
-                            <th>Gastteam</th>
-                            <th>Resultat</th>
-                            <th colspan="2"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="match in ctrl.filteredMatches">
-                            <td>{{ match.HomeTeamName | limitTo:25 }}<span ng-if="match.HomeTeamName.length > 25">...</span></td>
-                            <td>{{ match.GuestTeamName | limitTo:25 }}<span ng-if="match.GuestTeamName.length > 25">...</span></td>
-                            <td ng-if="!match.PlayDate"></td>
-                            <td ng-if="match.PlayDate">{{ match.HomeTeamScore || 0 }} : {{ match.GuestTeamScore || 0 }}</td>
-                            <td><button class="btn btn-primary btn-xs pull-right" ng-click="ctrl.editMatch(match)">Bearbeiten</button></td>
-                            <td><a class="btn btn-primary btn-xs pull-right" href="/matches/{{match.Id}}">View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
         <div class="col-lg-3">
             <div class="page-content">
                 <div class="boxedtitle page-title">
@@ -152,6 +118,46 @@
 
                 </form>
 
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="ctrl.isCompetitionReady && ctrl.isCompetitionCreated">
+
+        <div class="col-lg-12">
+            <div class="page-content">
+                <div class="boxedtitle page-title"><h2>Spiele</h2></div>
+
+                <label>Team</label><br />
+                <input type="text" class="form-control" ng-model="ctrl.teamFilter"/>
+
+                <br />
+                <br />
+
+                <table class="table table-responsive table-hover table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>Heimteam</th>
+                            <th>Gastteam</th>
+                            <th>Bar</th>
+                            <th>Spielzeit</th>
+                            <th>Resultat</th>
+                            <th colspan="2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="match in ctrl.filteredMatches">
+                            <td>{{ match.HomeTeamName | limitTo:25 }}<span ng-if="match.HomeTeamName.length > 25">...</span></td>
+                            <td>{{ match.GuestTeamName | limitTo:25 }}<span ng-if="match.GuestTeamName.length > 25">...</span></td>
+                            <td>{{match.BarName}}</td>
+                            <td>{{match.PlayDate | date : 'dd.MM.yyyy HH:mm'}}</td>
+                            <td ng-if="!match.PlayDate"></td>
+                            <td ng-if="match.PlayDate">{{ match.HomeTeamScore || 0 }} : {{ match.GuestTeamScore || 0 }}</td>
+                            <td><button class="btn btn-primary btn-xs pull-right" ng-click="ctrl.editMatch(match)">Bearbeiten</button></td>
+                            <td><a class="btn btn-primary btn-xs pull-right" href="/matches/{{match.Id}}">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 

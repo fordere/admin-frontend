@@ -7,7 +7,9 @@
 
             // recheck if our session is still alive on the server
             if (isAuthenticated) {
-                authenticatedUser = User.get({ id: 'me' }, function () {
+                User.get({ id: 'me' }, function (u) {
+                    authenticatedUser = u;
+                    $rootScope.$broadcast('event:authenticated');
                 }, function () {
                     setLoggedOut();
                     $rootScope.$broadcast('event:logout');

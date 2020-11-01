@@ -7,6 +7,7 @@
         vm.select = select;
         vm.getSelectedDivision = getSelectedDivision;
 
+
         function select(divisionId) {
             localStorage.setItem('divisionId', divisionId);
         }

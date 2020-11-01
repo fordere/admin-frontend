@@ -6,6 +6,8 @@
         'use strict';
         var vm = this;
 
+        divisionHolder.select(1);
+
         vm.divisionId = divisionHolder.getSelectedDivision();
         vm.isAuthenticated = authService.isAuthenticated();
         vm.isAdmin = authService.isAdmin();

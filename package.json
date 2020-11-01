@@ -64,6 +64,8 @@
     "yarn": ">= 1.0.0"
   },
   "scripts": {
+    "start": "gulp",
+    "build:prod": "gulp dist",
     "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@bower_components'), 'lib', 'junction') } catch (e) { }\""
   }
 }
