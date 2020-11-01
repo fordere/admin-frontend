@@ -153,7 +153,7 @@
                             <td>{{match.PlayDate | date : 'dd.MM.yyyy HH:mm'}}</td>
                             <td ng-if="!match.PlayDate"></td>
                             <td ng-if="match.PlayDate">{{ match.HomeTeamScore || 0 }} : {{ match.GuestTeamScore || 0 }}</td>
-                            <td><button class="btn btn-primary btn-xs pull-right" ng-click="ctrl.editMatch(match)">Bearbeiten</button></td>
+                            <td><a class="btn btn-primary btn-xs pull-right" href="/admin/season/{{match.SeasonId}}/competitions/{{match.CompetitionId}}/spielbetrieb/{{match.Id}}">Bearbeiten</a></td>
                             <td><a class="btn btn-primary btn-xs pull-right" href="/matches/{{match.Id}}">View</a></td>
                         </tr>
                     </tbody>

@@ -8,6 +8,6 @@ Install all dependencies:
 ```npm run install```
 
 Run the app:
-```gulp```
+```npm run start```
 
 This should start the development webserver on "http://localhost:8000/". 

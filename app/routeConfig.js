@@ -106,6 +106,10 @@
                 templateUrl: 'app/ui/admin/season/competition/leagueSpielbetrieb.html',
                 label: 'Spielbetrieb'
             })
+            .when('/admin/season/:seasonId/competitions/:id/spielbetrieb/:matchid', {
+                templateUrl: 'app/ui/admin/season/competition/match.html',
+                label: 'Match'
+            })
             .when('/admin/season/:seasonId/competitions/:id/edit', {
                 templateUrl: 'app/ui/admin/season/competition/competitionDetail.html',
                 label: 'Bearbeiten'

@@ -1,0 +1,60 @@
+﻿<div ng-controller="fordere.admin.matchCtrl as ctrl">
+
+    <div class="page-content">
+        <div class="boxedtitle page-title">
+            <h2>Spiel bearbeiten</h2>
+        </div>
+
+        <p class="alert alert-success" ng-if="ctrl.saveSuccess">Spiel erfolgreich gespeichert</p>
+        <p class="alert alert-success" ng-if="ctrl.resetSuccess">Spiel erfolgreich zurückgesetzt</p>
+        <p class="alert alert-danger" ng-if="ctrl.saveFailed">Spiel konnte nicht gespeichert werden. Alles
+            angegeben?</p>
+
+        <div class="row">
+            <div class="col-xs-6 form-group">
+                <label>{{ ctrl.editingMatch.HomeTeamName }}</label>
+                <input class="form-control" type="number" min="0" max="10" ng-model="ctrl.editingMatch.HomeTeamScore"/>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label>{{ ctrl.editingMatch.GuestTeamName }}</label>
+                <input class="form-control" type="number" min="0" max="10" ng-model="ctrl.editingMatch.GuestTeamScore"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Bar - Tisch</label>
+            <select class="form-control" name="time" ng-model="ctrl.editingMatch.TableId"
+                    ng-options="table.Id as table.BarName + ' - ' + table.Name for table in ctrl.tables"></select>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 form-group">
+                <label>Datum</label>
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy"
+                           ng-model="ctrl.editingMatch.Date" is-open="ctrl.isDatePickerOpen" close-text="Close"
+                           alt-input-formats="altInputFormats"/>
+                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"
+                                            ng-click="ctrl.openDatePicker($event)"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                </p>
+            </div>
+            <div class="col-xs-6 form-group">
+                <!-- TODO remove inline styles-->
+                <label style="display: block">Zeit</label>
+                <input type="text" style="width: 40px; display: inline;" placeholder="HH"
+                       ng-model="ctrl.editingMatch.Hour"/>
+                <input type="text" style="width: 40px; display: inline;" placeholder="MM"
+                       ng-model="ctrl.editingMatch.Minutes"/>
+            </div>
+        </div>
+
+
+        <button type="button" class="btn btn-danger pull-left" ng-click="ctrl.resetMatch()">Zurücksetzen</button>
+        <button type="button" class="btn btn-primary pull-right" style="margin-left: 10px" ng-click="ctrl.saveMatch()">Speichern</button>
+        <a type="button" class="btn btn-default pull-right"
+           href="/admin/season/{{ctrl.editingMatch.SeasonId}}/competitions/{{ctrl.editingMatch.CompetitionId}}/spielbetrieb">Abbrechen</a>
+    </div>
+</div>
